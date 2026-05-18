@@ -1,0 +1,36 @@
+settings:
+  max_tokens: 1000000000000  # Full-scale target token count (e.g., 1 Trillion)
+  repetition_factor: 5.0
+  seed: 42
+
+swarm:
+  minimum_source_weight: 0.002
+  minimum_topic_weight: 0.002
+  source_temperature: 1.0
+  topic_temperature: 1.0
+  min_source_strength: 0.1
+  max_source_strength: 5.0
+  min_topic_strength: 0.1
+  max_topic_strength: 5.0
+  sample_multiplier: 10
+  enable_bound: true
+  manual_prior: null
+  manual_topic_prior: null
+  nonzero_weight: null
+  existing_mix_file: null
+
+datasets:
+  finemath:
+    paths:
+      - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/HuggingFaceTB/finemath-full/finemath-3plus/finemath-3plus_text_document
+  nemotron:
+    quality:
+      high:
+        - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/nemotron-cc/1.0/20p-sample/high-actual-20p
+      medium:
+        - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/nemotron-cc/1.0/20p-sample/medium-actual-5p
+      low:
+        - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/nemotron-cc/1.0/20p-sample/low-actual-25p
+  the_stack:
+    paths:
+      - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/the-stack/1.2/data/sampled-10p/00_ALL_LANGUAGES/all-languages
