@@ -22,8 +22,8 @@ fi
 set -euo pipefail
 
 # For this standalone test script, we hardcode the target variant
-EXP_NAME="proxy_60M_test"
-MIX_FILE="mixes/nested-swarm-0000.txt"
+EXP_NAME="proxy_30M_test"
+MIX_FILE="../data/mixes/nested-swarm-0000.txt"
 
 MEGATRON_DIR="/flash/project_462000963/tools/OpenEuroLLM-NVIDIA-Megatron-LM"
 

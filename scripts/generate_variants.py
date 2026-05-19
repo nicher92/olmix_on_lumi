@@ -8,7 +8,7 @@ from olmix.generate.synthesize_mixture import generate_weights_dirichlet
 
 def get_configs():
     """Reads local config"""
-    with open("config.yaml", "r") as f:
+    with open("./configs/config.yaml", "r") as f:
         config = yaml.safe_load(f)
     return config["settings"], config.get("swarm", {}), config["datasets"]
 
@@ -75,20 +75,21 @@ def write_mixes_to_json(mixtures, domains):
             "variant_id": f"nested-swarm-{idx:04d}",
             "mix": variant_config
         })
-
-    with open("lumi_nested_variants.json", "w") as f:
+    
+    os.makedirs("./data", exist_ok=True)
+    with open("./data/lumi_nested_variants.json", "w") as f:
         json.dump(lumi_variants, f, indent=2)
 
     return lumi_variants
 
 def make_megatron_text_files_and_bash_script(lumi_variants, prefix_map):
     """Generate Megatron .txt mix files and the bash launcher"""
-    os.makedirs("mixes", exist_ok=True)
+    os.makedirs("./data/mixes", exist_ok=True)
     launch_commands = []
 
     for variant in lumi_variants:
         variant_id = variant["variant_id"]
-        mix_file_path = f"mixes/{variant_id}.txt"
+        mix_file_path = f"./data/mixes/{variant_id}.txt"
 
         with open(mix_file_path, "w") as f:
             for domain, config in variant["mix"].items():
@@ -96,7 +97,7 @@ def make_megatron_text_files_and_bash_script(lumi_variants, prefix_map):
                 if weight > 0:
                     f.write(f"{weight} {prefix_map[domain]}\n")
 
-        launch_commands.append(f"sbatch train-0.4B-ne.sh {variant_id} {mix_file_path}")
+        launch_commands.append(f"sbatch train-0.05B-ne.sh {variant_id} {mix_file_path}")
 
     # Create master launcher script
     launcher_script = "launch_all_swarms.sh"
