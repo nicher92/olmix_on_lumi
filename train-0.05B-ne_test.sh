@@ -1,11 +1,13 @@
 #!/bin/bash
-#SBATCH --job-name=olmix-60m-test
-#SBATCH --partition=small-g           # Aligned for single-GPU work
+#SBATCH --job-name=olmix-30m-test
+
+#SBATCH --partition=small-g
 #SBATCH --nodes=1
-#SBATCH --ntasks=1                    # 1 task total
-#SBATCH --gpus-per-task=1             # Request exactly 1 GPU (1 GCD)
-#SBATCH --cpus-per-task=7
-#SBATCH --mem-per-gpu=60G
+#SBATCH --ntasks=2              # Spawn 2 tasks instead of 1
+#SBATCH --gpus-per-task=1       # 1 GPU assigned per task
+#SBATCH --cpus-per-task=7       # 7 CPUs assigned per task
+#SBATCH --mem=120G              # Total memory for the job (or you can use --mem-per-gpu=60G)
+
 #SBATCH --time=02:00:00               
 #SBATCH --account=project_462000963
 #SBATCH --output logs/%j.out
@@ -74,8 +76,8 @@ export CUDA_DEVICE_MAX_CONNECTIONS=1
 
 # --- Calibrated Single-GPU Distributed Network Variables ---
 export MASTER_ADDR=localhost
-export MASTER_PORT=9999
-export WORLD_SIZE=1                   
+export MASTER_PORT=9999       
+export WORLD_SIZE=$SLURM_NTASKS
 export OMP_NUM_THREADS=2    
 export HSA_ENABLE_SDMA=0
 
@@ -100,6 +102,11 @@ FFN_HIDDEN_SIZE=768          # Scaled down for SwiGLU (approx 8/3 * 256)
 NUM_ATTENTION_HEADS=8        # Kept at 8
 NUM_QUERY_GROUPS=8           # MHA (matches attention heads)
 KV_CHANNELS=32               # head_dim (256 / 8 = 32)
+# ---------------------------------------------
+TIE_WORD_EMBEDDINGS=1
+INIT_METHOD_STD=0.02
+SEQ_LENGTH=2048              # per olmix paper
+ROTARY_BASE=10000             
 # ---------------------------------------------
 
 PIPELINE_MODEL_PARALLEL_SIZE=1
@@ -270,7 +277,7 @@ echo "SLURM_CPUS_PER_TASK: $SLURM_CPUS_PER_TASK"
 # --- Restored Strict Exec Pipeline ---
 srun \
     --label \
-    --cpu-bind=cores \
+    --cpu-bind=mask_cpu:$BIND_MASK \
     singularity exec \
     -B "$BASE_DIR" \
     -B "$BIND_DIRS" \
