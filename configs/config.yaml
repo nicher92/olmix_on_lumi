@@ -1,36 +1,164 @@
 settings:
-  max_tokens: 1000000000000  # Full-scale target token count (e.g., 1 Trillion)
+  max_tokens: 1000000000000  # Full-scale target token count (e.g., 10 Trillion)
   repetition_factor: 5.0
   seed: 42
 
 swarm:
-  minimum_source_weight: 0.002
-  minimum_topic_weight: 0.002
-  source_temperature: 1.0
-  topic_temperature: 1.0
-  min_source_strength: 0.1
+  minimum_source_weight: 0.0001
+  minimum_topic_weight: 0.0001
+  source_temperature: 0.5
+  topic_temperature: 0.5
+  min_source_strength: 0.01
   max_source_strength: 5.0
-  min_topic_strength: 0.1
+  min_topic_strength: 0.01
   max_topic_strength: 5.0
-  sample_multiplier: 10
   enable_bound: true
   manual_prior: null
   manual_topic_prior: null
-  nonzero_weight: null
+  nonzero_weight: false
   existing_mix_file: null
+  manual_prior:
+    # 🌍 General Web (40%)
+    dclm_baseline: 0.20
+    nemotron_cc: 0.15
+    hplt4_cc: 0.03
+    hplt4_ia: 0.01
+    hplt4_ab: 0.01
+
+    # 📚 Academic, Books & Encyclopedias (20%)
+    finepdfs: 0.10
+    finepdfs_edu: 0.03
+    finephrase: 0.01
+    olmo_mix_wiki: 0.02
+    olmo_mix_arxiv: 0.02
+    olmo_mix_pes2o: 0.02
+
+    # 💻 Code (20%)
+    the_stack: 0.10
+    starcoder: 0.04
+    swallow_code_2_0: 0.02
+    dolma3_dolmino_mix_code: 0.04
+
+    # 🧮 Math & Reasoning (20%)
+    megamath: 0.08
+    finemath: 0.05
+    dolma3_dolmino_mix_math: 0.05
+    nemotron_pretraining_v1: 0.015
+    nemotron_pretraining_v1_1: 0.005
+
 
 datasets:
-  finemath:
+  # ==========================================
+  # ENGLISH 
+  # ==========================================
+  dclm_baseline:
+    multiplier: 10
     paths:
-      - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/HuggingFaceTB/finemath-full/finemath-3plus/finemath-3plus_text_document
-  nemotron:
+      - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/mlfoundations/dclm-baseline-1.0-10p-sample/dclm-10p-sample
+  
+  nemotron_cc:
+    multiplier: 5  # 20% sample
     quality:
       high:
         - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/nemotron-cc/1.0/20p-sample/high-actual-20p
+      medium_high:
+        - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/nemotron-cc/1.0/20p-sample/medium-high-actual-20p
       medium:
         - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/nemotron-cc/1.0/20p-sample/medium-actual-5p
-      low:
-        - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/nemotron-cc/1.0/20p-sample/low-actual-25p
+        
+  hplt4_cc:
+    multiplier: 1
+    paths:
+      - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/hplt/4.0/pre-clean/eng_Latn/hplt-4.0-pre-clean-eng_Latn-cc_text_document
+  hplt4_ia:
+    multiplier: 1
+    paths:
+      - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/hplt/4.0/pre-clean/eng_Latn/hplt-4.0-pre-clean-eng_Latn-ia_text_document
+  hplt4_ab:
+    multiplier: 1
+    paths:
+      - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/hplt/4.0/pre-clean/eng_Latn/hplt-4.0-pre-clean-eng_Latn-ab_text_document
+      
+  finepdfs:
+    multiplier: 10
+    paths:
+      - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/HuggingFaceFW/finepdfs-10p-sample/eng_Latn
+  finepdfs_edu:
+    multiplier: 10
+    paths:
+      - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/HuggingFaceFW/finepdfs-edu-10p-sample/eng_Latn
+  finephrase:
+    multiplier: 1
+    paths:
+      - /scratch/project_462000963/preprocessed/oellm-v1-256k/HuggingFaceFW/finephrase/finephrase_decomp
+      
+  olmo_mix_wiki:
+    multiplier: 10
+    paths:
+      - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/OLMO-mix-10p-sample/Wiki-10p-sample
+  olmo_mix_arxiv:
+    multiplier: 10
+    paths:
+      - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/OLMO-mix-10p-sample/arxiv-10p-sample
+  olmo_mix_pes2o:
+    multiplier: 10
+    paths:
+      - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/OLMO-mix-10p-sample/pes2o-10p-sample
+      
+  nemotron_pretraining_v1:
+    multiplier: 1
+    paths:
+      - /scratch/project_462000963/preprocessed/oellm-v1-256k/nvidia/nemotron-pretraining-specialized-v1/nemotron-pretraining-specialized-v1
+  nemotron_pretraining_v1_1:
+    multiplier: 1
+    paths:
+      - /scratch/project_462000963/preprocessed/oellm-v1-256k/nvidia/nemotron-pretraining-specialized-v1.1/nemotron-pretraining-specialized-v1.1
+
+  # ==========================================
+  # CODE
+  # ==========================================
+  starcoder:
+    multiplier: 10
+    paths:
+      - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/starcoder-10p-sample/starcoder-10p-sample
+  swallow_code_2_0:
+    multiplier: 10
+    paths:
+      - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/swallow-code-v2/sampled-10p/stage5-auto-format/python-medium
+  dolma3_dolmino_mix_code:
+    multiplier: 10
+    paths:
+      - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/dolma3_dolmino_mix-100B-1125/sampled-10p/code-meta-reasoning/code-meta-reasoning_text_document
+      - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/dolma3_dolmino_mix-100B-1125/sampled-10p/cranecode/cranecode_text_document
+      - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/dolma3_dolmino_mix-100B-1125/sampled-10p/stack_edu-fim/stack_edu-fim_text_document
+      - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/dolma3_dolmino_mix-100B-1125/sampled-10p/program_verifiable/program_verifiable_text_document
   the_stack:
+    multiplier: 10
     paths:
       - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/the-stack/1.2/data/sampled-10p/00_ALL_LANGUAGES/all-languages
+
+  # ==========================================
+  # MATH
+  # ==========================================
+  finemath:
+    multiplier: 1
+    paths:
+      - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/HuggingFaceTB/finemath-full/finemath-4plus/finemath-4plus_text_document
+  megamath:
+    multiplier: 1
+    paths:
+#      - /scratch/project_462000963/preprocessed/oellm-v1-256k/LLM360/MegaMath-full/megamath-code/megamath-code_text_document
+      - /scratch/project_462000963/preprocessed/oellm-v1-256k/LLM360/MegaMath-full/megamath-qa/megamath-qa_text_document
+      - /scratch/project_462000963/preprocessed/oellm-v1-256k/LLM360/MegaMath-full/megamath-text-code-block/megamath-text-code-block_text_document
+      - /scratch/project_462000963/preprocessed/oellm-v1-256k/LLM360/MegaMath-full/megamath-translated-code/megamath-translated-code_text_document
+      - /scratch/project_462000963/preprocessed/oellm-v1-256k/LLM360/MegaMath-full/megamath-web/megamath-web_text_document
+      - /scratch/project_462000963/preprocessed/oellm-v1-256k/LLM360/MegaMath-full/megamath-web-pro/megamath-web-pro_text_document
+  dolma3_dolmino_mix_math:
+    multiplier: 10
+    paths:
+      - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/dolma3_dolmino_mix-100B-1125/sampled-10p/tinymath-mind/tinymath-mind_text_document
+      - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/dolma3_dolmino_mix-100B-1125/sampled-10p/math-meta-reasoning/math-meta-reasoning_text_document
+      - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/dolma3_dolmino_mix-100B-1125/sampled-10p/dolmino-math/dolmino-math_text_document
+      - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/dolma3_dolmino_mix-100B-1125/sampled-10p/cranemath/cranemath_text_document
+      - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/dolma3_dolmino_mix-100B-1125/sampled-10p/megamatt/megamatt_text_document
+

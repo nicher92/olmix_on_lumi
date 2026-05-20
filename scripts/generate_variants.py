@@ -23,33 +23,67 @@ def calculate_num_tokens(bin_path):
     return (file_size - header_offset) // bytes_per_token
 
 def parse_yaml(datasets_config):
-    """Reads source datasets, calculates number of tokens per .bin file"""
+    """Reads source datasets, applies multipliers, and calculates tokens per .bin file"""
     sources = []
     leaf_tokens = {}
-    prefix_map = {}  # Stores the mapping from domain names back to Megatron prefix paths
+    prefix_map = {}  # Stores [(prefix, token_count)] for proportional weight distribution
 
     # Parse YAML, count tokens (appending .bin), and build SourceConfigs
     for source_name, source_data in datasets_config.items():
+        # Get the specific multiplier for this dataset, default to 1 (Full)
+        multiplier = source_data.get("multiplier", 1)
+
         if "quality" in source_data:
             qualities = []
             for q_name, q_prefixes in source_data["quality"].items():
-                prefix = q_prefixes[0]
-                bin_path = f"{prefix}.bin"
-                qualities.append(QualityConfig(name=q_name, paths=[bin_path]))
+                total_tokens = 0
+                q_bin_paths = []
+                shard_info = []
+                
+                # Loop through ALL paths, not just index [0]
+                for prefix in q_prefixes:
+                    bin_path = f"{prefix}.bin"
+                    q_bin_paths.append(bin_path)
+                    tokens = calculate_num_tokens(bin_path)
+                    total_tokens += tokens
+                    shard_info.append((prefix, tokens))
+
+                qualities.append(QualityConfig(name=q_name, paths=q_bin_paths))
 
                 leaf_name = f"{source_name}:{q_name}"
-                prefix_map[leaf_name] = prefix
-                leaf_tokens[leaf_name] = calculate_num_tokens(bin_path)
+                prefix_map[leaf_name] = shard_info
+                
+                # Apply the sampling multiplier to scale up the perceived token count
+                leaf_tokens[leaf_name] = total_tokens * multiplier
 
             sources.append(SourceConfig(name=source_name, quality=qualities))
 
         else:
-            prefix = source_data["paths"][0]
-            bin_path = f"{prefix}.bin"
-            sources.append(SourceConfig(name=source_name, paths=[bin_path]))
+            prefixes = source_data.get("paths", [])
+            bin_paths = []
+            total_tokens = 0
+            shard_info = []
+            
+            # Loop through ALL paths, not just index [0]
+            for prefix in prefixes:
+                bin_path = f"{prefix}.bin"
+                bin_paths.append(bin_path)
+                tokens = calculate_num_tokens(bin_path)
+                total_tokens += tokens
+                shard_info.append((prefix, tokens))
 
-            prefix_map[source_name] = prefix
-            leaf_tokens[source_name] = calculate_num_tokens(bin_path)
+            sources.append(SourceConfig(name=source_name, paths=bin_paths))
+
+            prefix_map[source_name] = shard_info
+            
+            # Apply the sampling multiplier to scale up the perceived token count
+            leaf_tokens[source_name] = total_tokens * multiplier
+    
+    for k,v in leaf_tokens.items():
+        print(k)
+        print(v)
+        print()
+        print("------------------------------------")
 
     return leaf_tokens, sources, prefix_map
 
@@ -75,7 +109,7 @@ def write_mixes_to_json(mixtures, domains):
             "variant_id": f"nested-swarm-{idx:04d}",
             "mix": variant_config
         })
-    
+
     os.makedirs("./data", exist_ok=True)
     with open("./data/lumi_nested_variants.json", "w") as f:
         json.dump(lumi_variants, f, indent=2)
@@ -93,9 +127,16 @@ def make_megatron_text_files_and_bash_script(lumi_variants, prefix_map):
 
         with open(mix_file_path, "w") as f:
             for domain, config in variant["mix"].items():
-                weight = config["weight"]
-                if weight > 0:
-                    f.write(f"{weight} {prefix_map[domain]}\n")
+                domain_weight = config["weight"]
+                if domain_weight > 0:
+                    shard_info = prefix_map[domain]
+                    total_actual_tokens = sum(tokens for _, tokens in shard_info)
+                    
+                    for prefix, tokens in shard_info:
+                        if total_actual_tokens > 0:
+                            # Distribute the domain's weight across its shards proportionally
+                            shard_weight = domain_weight * (tokens / total_actual_tokens)
+                            f.write(f"{shard_weight:.6f} {prefix}\n")
 
         launch_commands.append(f"sbatch train-0.05B-ne.sh {variant_id} {mix_file_path}")
 
@@ -107,8 +148,7 @@ def make_megatron_text_files_and_bash_script(lumi_variants, prefix_map):
             f.write(cmd + "\n")
 
     os.chmod(launcher_script, 0o755)
-    return launcher_script # Added return so the main block can print it
-
+    return launcher_script
 
 if __name__ == "__main__":
     settings, swarm_config, datasets_config = get_configs()
@@ -118,7 +158,7 @@ if __name__ == "__main__":
     NUM_LEAVES = len(domains)
     NUM_VARIANTS = 3 * (NUM_LEAVES + 1)
 
-    print(f"📊 Config loaded. Found {NUM_LEAVES} total leaf datasets. Total tokens: {total_tokens:,}")
+    print(f"📊 Config loaded. Found {NUM_LEAVES} total leaf datasets. Scaled total tokens: {total_tokens:,}")
 
     # Generate Mixtures
     mixtures = generate_weights_dirichlet(
@@ -129,7 +169,6 @@ if __name__ == "__main__":
         max_tokens=settings["max_tokens"],
         repetition_factor=settings["repetition_factor"],
 
-        # Read dynamically from the YAML's swarm block
         minimum_source_weight=swarm_config.get("minimum_source_weight", 0.002),
         minimum_topic_weight=swarm_config.get("minimum_topic_weight", 0.002),
         source_temperature=swarm_config.get("source_temperature", 1.0),
@@ -138,7 +177,10 @@ if __name__ == "__main__":
         max_source_strength=swarm_config.get("max_source_strength", 5.0),
         min_topic_strength=swarm_config.get("min_topic_strength", 0.1),
         max_topic_strength=swarm_config.get("max_topic_strength", 5.0),
-        sample_multiplier=swarm_config.get("sample_multiplier", 10),
+        
+        # Default to 1 so olmix doesn't globally scale everything anymore
+        sample_multiplier=20,
+        
         enable_bound=swarm_config.get("enable_bound", True),
         manual_prior=swarm_config.get("manual_prior", None),
         manual_topic_prior=swarm_config.get("manual_topic_prior", None),
@@ -146,7 +188,6 @@ if __name__ == "__main__":
         existing_mix_file=swarm_config.get("existing_mix_file", None),
     )
 
-    # Now that mixtures are generated, write to JSON and generate scripts
     lumi_variants = write_mixes_to_json(mixtures, domains)
     launcher_script = make_megatron_text_files_and_bash_script(lumi_variants, prefix_map)
 
