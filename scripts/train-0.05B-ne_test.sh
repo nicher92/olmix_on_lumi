@@ -1,14 +1,14 @@
 #!/bin/bash
 #SBATCH --job-name=olmix-30m-test
 
-#SBATCH --partition=small-g
+#SBATCH --partition=dev-g
 #SBATCH --nodes=1
-#SBATCH --ntasks=2              # Spawn 2 tasks instead of 1
-#SBATCH --gpus-per-task=1       # 1 GPU assigned per task
+#SBATCH --ntasks-per-node=2
+#SBATCH --gpus-per-node=2
 #SBATCH --cpus-per-task=7       # 7 CPUs assigned per task
 #SBATCH --mem=120G              # Total memory for the job (or you can use --mem-per-gpu=60G)
 
-#SBATCH --time=02:00:00               
+#SBATCH --time=00:30:00               
 #SBATCH --account=project_462000963
 #SBATCH --output logs/%j.out
 #SBATCH --error logs/%j.err
@@ -22,7 +22,7 @@ fi
 set -euo pipefail
 
 # For this standalone test script, we hardcode the target variant
-EXP_NAME="proxy_30M_test"
+EXP_NAME="proxy_30M"
 MIX_FILE="../data/mixes/nested-swarm-0000.txt"
 
 MEGATRON_DIR="/flash/project_462000963/tools/OpenEuroLLM-NVIDIA-Megatron-LM"
@@ -74,16 +74,22 @@ WANDB_EXP_NAME="${EXP_NAME}-mix"
 LAUNCH_SCRIPT="$BASE_DIR/launch.sh"
 export CUDA_DEVICE_MAX_CONNECTIONS=1
 
-# --- Calibrated Single-GPU Distributed Network Variables ---
-export MASTER_ADDR=localhost
-export MASTER_PORT=9999       
+# --- Corrected Single-Node Distributed Network Variables ---
+# Dynamically get the node's hostname (e.g., nid00XXXX), which natively resolves to the hsn IP!
+export MASTER_ADDR=$(scontrol show hostnames "$SLURM_JOB_NODELIST" | head -n 1)
+
+# Generate a random port based on your Job ID to prevent collisions with other users on this shared node
+export MASTER_PORT=$(( 10000 + (SLURM_JOBID % 20000) ))
+
 export WORLD_SIZE=$SLURM_NTASKS
-export OMP_NUM_THREADS=2    
+export OMP_NUM_THREADS=2
 export HSA_ENABLE_SDMA=0
 
-export NCCL_SOCKET_IFNAME=hsn0,hsn1,hsn2,hsn3
+# Prefix matching: use the hsn network, but only the specific card Slurm gave you
+export NCCL_SOCKET_IFNAME=hsn
 export NCCL_NET_GDR_LEVEL=PHB
 export HSA_FORCE_FINE_GRAIN_PCIE=1
+
 export PYTHONWARNINGS=ignore
 export NVTE_DEBUG=0
 export NVTE_DEBUG_LEVEL=0
@@ -277,7 +283,7 @@ echo "SLURM_CPUS_PER_TASK: $SLURM_CPUS_PER_TASK"
 # --- Restored Strict Exec Pipeline ---
 srun \
     --label \
-    --cpu-bind=mask_cpu:$BIND_MASK \
+    --cpu-bind=cores \
     singularity exec \
     -B "$BASE_DIR" \
     -B "$BIND_DIRS" \

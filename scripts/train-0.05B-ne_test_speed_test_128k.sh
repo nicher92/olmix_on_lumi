@@ -151,10 +151,10 @@ DATA_ARGS=(
     --tokenizer-type HuggingFaceTokenizer
     --tokenizer-model "$TOKENIZER_MODEL"
     --make-vocab-size-divisible-by 128
-   # --dataloader-type single   # <-- CHANGE THIS FROM cyclic TO single
-   # --num-workers 4            # <-- KEEP THIS AT 4
-    --dataloader-type cyclic
-    --num-workers 0
+    --dataloader-type single   # <-- CHANGE THIS FROM cyclic TO single
+    --num-workers 2            # <-- KEEP THIS AT 4
+   # --dataloader-type cyclic
+   # --num-workers 0
 )
 
 MODEL_ARGS=(

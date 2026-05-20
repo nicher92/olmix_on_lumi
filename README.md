@@ -19,4 +19,57 @@ the suggested mixes will be put into the /mixes directory
 
 # TODO  
 see if we can optimize speed of small training runs, might be reasonable to retokenize a small part of the data using a smaller tokenizer to make the models smaller  
-add evaluation using BPB, base it off previous script that uses the oellm-cli generated bash script  
+add evaluation using BPB, base it off previous script that uses the oellm-cli generated bash script 
+
+
+
+
+# Datasets
+
+### English
+Datasets representing primarily natural language English text.
+
+| Dataset | Path on LUMI | Scale |
+| :--- | :--- | :--- |
+| **DCLM-baseline** | `/scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/mlfoundations/dclm-baseline-1.0-10p-sample/dclm-10p-sample` | 10p |
+| **Nemotron-CC-v1** | `/scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/nemotron-cc/1.0/10p-sample/nemotron-ha-10p-sample` | 10p |
+| **HPLT4-CC** | `/scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/hplt/4.0/pre-clean/eng_Latn/hplt-4.0-pre-clean-eng_Latn-cc_text_document` | Full |
+| **HPLT4-IA** | `/scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/hplt/4.0/pre-clean/eng_Latn/hplt-4.0-pre-clean-eng_Latn-ia_text_document` | Full |
+| **HPLT4-AB** | `/scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/hplt/4.0/pre-clean/eng_Latn/hplt-4.0-pre-clean-eng_Latn-ab_text_document` | Full |
+| **FinePDFs** | `/scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/HuggingFaceFW/finepdfs-10p-sample/eng_Latn` | 10p |
+| **FinePDFs-edu** | `/scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/HuggingFaceFW/finepdfs-edu-10p-sample/eng_Latn` | 10p |
+| **FinePhrase** | `/scratch/project_462000963/preprocessed/oellm-v1-256k/HuggingFaceFW/finephrase/finephrase_decomp` | Full |
+| **olmo-mix-1124-wiki** | `/scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/OLMO-mix-10p-sample/Wiki-10p-sample` | 10p |
+| **olmo-mix-1124-arxiv** | `/scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/OLMO-mix-10p-sample/arxiv-10p-sample` | 10p |
+| **olmo-mix-1124-pes2o** | `/scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/OLMO-mix-10p-sample/pes2o-10p-sample` | 10p |
+| **Nemotron-Pretraining-v1** | `/scratch/project_462000963/preprocessed/oellm-v1-256k/nvidia/nemotron-pretraining-specialized-v1/nemotron-pretraining-specialized-v1` | Full |
+| **Nemotron-Pretraining-v1.1** | `/scratch/project_462000963/preprocessed/oellm-v1-256k/nvidia/nemotron-pretraining-specialized-v1.1/nemotron-pretraining-specialized-v1.1` | Full |
+| **Nemotron-MIND** | `[PATH NEEDED]` | TBD |
+| **MixtureVitae-v1** | `[PATH NEEDED]` | TBD |
+
+---
+
+### Code
+Datasets representing primarily text in programming languages.
+
+| Dataset | Path on LUMI | Scale |
+| :--- | :--- | :--- |
+| **Starcoder** | `/scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/starcoder-10p-sample/starcoder-10p-sample` | 10p |
+| **Swallow Code 2.0** | `/scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/swallow-code-v2/sampled-10p/stage5-auto-format/python-medium` | 10p |
+| **Dolma3-dolmino-mix (Code)** | `/scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/dolma3_dolmino_mix-100B-1125/sampled-10p/stack_edu-fim/...` | 10p |
+| **Stack 1.2** | `/scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/the-stack/1.2/data/sampled-10p/00_ALL_LANGUAGES/all-languages` | 10p |
+| **common-pile Stack v2** | `[PATH NEEDED]` | TBD |
+| **common-pile Stack v2-edu** | `[PATH NEEDED]` | TBD |
+
+---
+
+### Math
+Datasets representing math content.
+
+| Dataset | Path on LUMI | Scale |
+| :--- | :--- | :--- |
+| **FineMath** | `/scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/HuggingFaceTB/finemath-full/finemath-4plus/finemath-4plus_text_document` | Full |
+| **MegaMath** | `/scratch/project_462000963/preprocessed/oellm-v1-256k/LLM360/MegaMath-full/megamath-web-pro/megamath-web-pro_text_document` | Full |
+| **Swallow Math 2.0** | `[PATH NEEDED]` | TBD |
+| **Dolma3-dolmino-mix (Math)**| `/scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/dolma3_dolmino_mix-100B-1125/sampled-10p/cranemath/...` | 10p |
+| **OpenWebMath** | `[PATH NEEDED]` | TBD | 
