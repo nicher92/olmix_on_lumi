@@ -32,7 +32,7 @@ Datasets representing primarily natural language English text.
 | Dataset | Path on LUMI | Scale |
 | :--- | :--- | :--- |
 | **DCLM-baseline** | `/scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/mlfoundations/dclm-baseline-1.0-10p-sample/dclm-10p-sample` | 10p |
-| **Nemotron-CC-v1** | `/scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/nemotron-cc/1.0/10p-sample/nemotron-ha-10p-sample` | 10p |
+| **Nemotron-CC-v1** | `/scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/nemotron-cc/1.0/20p-sample/high-actual-20p`<br>`/scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/nemotron-cc/1.0/20p-sample/medium-high-actual-20p`<br>`/scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/nemotron-cc/1.0/20p-sample/medium-actual-5p` | 20p |
 | **HPLT4-CC** | `/scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/hplt/4.0/pre-clean/eng_Latn/hplt-4.0-pre-clean-eng_Latn-cc_text_document` | Full |
 | **HPLT4-IA** | `/scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/hplt/4.0/pre-clean/eng_Latn/hplt-4.0-pre-clean-eng_Latn-ia_text_document` | Full |
 | **HPLT4-AB** | `/scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/hplt/4.0/pre-clean/eng_Latn/hplt-4.0-pre-clean-eng_Latn-ab_text_document` | Full |
@@ -69,7 +69,8 @@ Datasets representing math content.
 | Dataset | Path on LUMI | Scale |
 | :--- | :--- | :--- |
 | **FineMath** | `/scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/HuggingFaceTB/finemath-full/finemath-4plus/finemath-4plus_text_document` | Full |
-| **MegaMath** | `/scratch/project_462000963/preprocessed/oellm-v1-256k/LLM360/MegaMath-full/megamath-web-pro/megamath-web-pro_text_document` | Full |
+| **MegaMath** | `/scratch/project_462000963/preprocessed/oellm-v1-256k/LLM360/MegaMath-full/megamath-code/megamath-code_text_document`<br>`/scratch/project_462000963/preprocessed/oellm-v1-256k/LLM360/MegaMath-full/megamath-qa/megamath-qa_text_document`<br>`/scratch/project_462000963/preprocessed/oellm-v1-256k/LLM360/MegaMath-full/megamath-text-code-block/megamath-text-code-block_text_document`<br>`/scratch/project_462000963/preprocessed/oellm-v1-256k/LLM360/MegaMath-full/megamath-translated-code/megamath-translated-code_text_document`<br>`/scratch/project_462000963/preprocessed/oellm-v1-256k/LLM360/MegaMath-full/megamath-web/megamath-web_text_document`<br>`/scratch/project_462000963/preprocessed/oellm-v1-256k/LLM360/MegaMath-full/megamath-web-pro/megamath-web-pro_text_document` | Full |
 | **Swallow Math 2.0** | `[PATH NEEDED]` | TBD |
 | **Dolma3-dolmino-mix (Math)**| `/scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/dolma3_dolmino_mix-100B-1125/sampled-10p/cranemath/...` | 10p |
-| **OpenWebMath** | `[PATH NEEDED]` | TBD | 
+| **OpenWebMath** | `[PATH NEEDED]` | TBD |
+
