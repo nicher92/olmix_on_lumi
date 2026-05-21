@@ -73,9 +73,7 @@ OUTPUT_DIR="/flash/project_462000963/users/$USER/ablation_output/${EXP_NAME}"
 CHECKPOINT_PATH="$OUTPUT_DIR/checkpoints"
 TENSORBOARD_DIR="$OUTPUT_DIR/tensorboard/$SLURM_JOB_NAME-$SLURM_JOBID"
 WANDB_DIR="$OUTPUT_DIR/wandb"
-export WANDB_API_KEY="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"
-export HF_TOKEN="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"
-
+source ~/.hpc_secrets
 
 mkdir -p "$CHECKPOINT_PATH"
 
