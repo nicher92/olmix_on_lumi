@@ -62,8 +62,8 @@ Datasets representing primarily text in programming languages.
 | **Swallow Code 2.0** | `/scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/swallow-code-v2/sampled-10p/stage5-auto-format/python-medium` | 10p |
 | **Dolma3-dolmino-mix (Code)** | `/scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/dolma3_dolmino_mix-100B-1125/sampled-10p/stack_edu-fim/...` | 10p |
 | **Stack 1.2** | `/scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/the-stack/1.2/data/sampled-10p/00_ALL_LANGUAGES/all-languages` | 10p |
-| **common-pile Stack v2** | `[PATH NEEDED]` | TBD |
-| **common-pile Stack v2-edu** | `[PATH NEEDED]` | TBD |
+| **common-pile Stack v2** | `/scratch/project_465002530/preprocessed/oellm-v1-256k/common-pile` | Full |
+| **common-pile Stack v2-edu** | `/scratch/project_465002530/preprocessed/oellm-v1-256k/common-pile` | Full |
 
 ---
 

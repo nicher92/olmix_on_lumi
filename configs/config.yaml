@@ -136,7 +136,14 @@ datasets:
     multiplier: 10
     paths:
       - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/the-stack/1.2/data/sampled-10p/00_ALL_LANGUAGES/all-languages
-
+  the_stack_v2:
+    multiplier: 1
+    paths: 
+      - /scratch/project_465002530/preprocessed/oellm-v1-256k/common-pile/stackv2/stackv2
+  the_stackv2_edu:
+    multiplier: 1
+    paths: 
+      - /scratch/project_465002530/preprocessed/oellm-v1-256k/common-pile/stackv2edu/stackv2_edu
   # ==========================================
   # MATH
   # ==========================================
