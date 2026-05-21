@@ -1,5 +1,5 @@
 settings:
-  max_tokens: 1000000000000  # Full-scale target token count (e.g., 10 Trillion)
+  max_tokens: 3000000000  # unconstrained swarm, but constrain the mixture later
   repetition_factor: 5.0
   seed: 42
 

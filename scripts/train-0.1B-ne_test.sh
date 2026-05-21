@@ -89,6 +89,7 @@ export NVTE_DEBUG_LEVEL=0
 # ====================================================================
 # MODEL AND PRETRAINING CONFIGURATION (60M Olmix Setup)
 # ====================================================================
+MIX_DIR + $SBATCH_JOB_ID 
 DATA_PATH=$(tr "\n" " " < "$MIX_FILE")
 DATA_CACHE_PATH="/scratch/project_462000963/users/$USER/test_output/data_cache_${EXP_NAME}"
 TOKENIZER_MODEL="openeurollm/tokenizer-256k"

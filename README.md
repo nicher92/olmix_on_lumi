@@ -9,13 +9,16 @@ Thirdly, evaluate the different mixtures using BPB
 Finally train regression models on the mixtures and get a final suggested mix  
 
 # Steps for computing optimal mixture  
-add all datasets that we are interested in, in the config.yaml file  
+Add all datasets that we are interested in, in the config.yaml file  
 training data used as input can be found here: /scratch/project_465002530/preprocessed/oellm-v1-256k/catalogue/  
 
 # Command to run to generate mixtures directly  
-generate_mixes.sh -- this will read the config.yaml and use olmix to generate suggested mixes  
+./generate_mixes.sh -- this will read the config.yaml and use olmix to generate suggested mixes, it will also create the launch_all_swarms.sh script  
 the suggested mixes will be put into the /mixes directory  
+Per the Olmix paper we generate unconstrained swarms to explore the mixture space, and later constrain the specific mixture to a realistic mix that takes data constraints into account
 
+# Command to start run
+./launch_all_swarms.sh - starts an array job of all mixes
 
 # TODO  
 see if we can optimize speed of small training runs, might be reasonable to retokenize a small part of the data using a smaller tokenizer to make the models smaller  
