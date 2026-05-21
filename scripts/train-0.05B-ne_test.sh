@@ -25,7 +25,7 @@ set -euo pipefail
 TASK_ID=${SLURM_ARRAY_TASK_ID:-0}
 TASK_ID_PADDED=$(printf "%04d" $TASK_ID)
 EXP_NAME="nested-swarm-${TASK_ID_PADDED}"
-MIX_FILE="../data/mixes/${EXP_NAME}.txt"
+MIX_FILE="data/mixes/${EXP_NAME}.txt"
 
 
 MEGATRON_DIR="/flash/project_462000963/tools/OpenEuroLLM-NVIDIA-Megatron-LM"
