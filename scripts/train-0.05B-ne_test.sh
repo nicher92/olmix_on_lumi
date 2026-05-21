@@ -1,17 +1,18 @@
 #!/bin/bash
 #SBATCH --job-name=olmix-30m-test
 
-#SBATCH --partition=dev-g
+#SBATCH --partition=standard-g
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=2
 #SBATCH --gpus-per-node=2
 #SBATCH --cpus-per-task=7       # 7 CPUs assigned per task
 #SBATCH --mem=120G              # Total memory for the job (or you can use --mem-per-gpu=60G)
 
-#SBATCH --time=00:30:00               
-#SBATCH --account=project_462000963
-#SBATCH --output logs/%j.out
-#SBATCH --error logs/%j.err
+#SBATCH --time=04:00:00               
+#SBATCH --account=project_465002530
+#SBATCH --output logs/%A_%a.out
+#SBATCH --error logs/%A_%a.err
+
 
 if [ -z $SLURM_JOB_ID ]; then
     mkdir -p logs
@@ -21,17 +22,27 @@ fi
 
 set -euo pipefail
 
-# For this standalone test script, we hardcode the target variant
-EXP_NAME="proxy_30M"
-MIX_FILE="../data/mixes/nested-swarm-0000.txt"
+TASK_ID=${SLURM_ARRAY_TASK_ID:-0}
+TASK_ID_PADDED=$(printf "%04d" $TASK_ID)
+EXP_NAME="nested-swarm-${TASK_ID_PADDED}"
+MIX_FILE="../data/mixes/${EXP_NAME}.txt"
+
 
 MEGATRON_DIR="/flash/project_462000963/tools/OpenEuroLLM-NVIDIA-Megatron-LM"
 
-# --- Retained Slurm Rescheduling Protections ---
+# --- Retained Slurm Rescheduling Protections (Array Safe) ---
 timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
-logfile_basename="${SLURM_JOB_NAME}-${SLURM_JOBID}-${timestamp}"
-mv -f "logs/${SLURM_JOBID}.out" "logs/${logfile_basename}.out"
-mv -f "logs/${SLURM_JOBID}.err" "logs/${logfile_basename}.err"
+
+# Determine the log ID format created by Slurm
+if [[ -n "${SLURM_ARRAY_JOB_ID:-}" ]]; then
+    LOG_ID="${SLURM_ARRAY_JOB_ID}_${SLURM_ARRAY_TASK_ID}"
+else
+    LOG_ID="${SLURM_JOB_ID}"
+fi
+
+logfile_basename="${SLURM_JOB_NAME}-${LOG_ID}-${timestamp}"
+mv -f "logs/${LOG_ID}.out" "logs/${logfile_basename}.out"
+mv -f "logs/${LOG_ID}.err" "logs/${logfile_basename}.err"
 
 if [[ -v SLURM_RESTART_COUNT ]]; then
     failed_node=$(grep 'Node failure' logs/latest.err | awk '{print $NF}')
@@ -44,8 +55,9 @@ if [[ -v SLURM_RESTART_COUNT ]]; then
     fi
 fi
 
-ln -sf "${logfile_basename}.out" "logs/latest.out"
-ln -sf "${logfile_basename}.err" "logs/latest.err"
+ln -sf "${logfile_basename}.out" "logs/latest_${LOG_ID}.out"
+ln -sf "${logfile_basename}.err" "logs/latest_${LOG_ID}.err"
+
 
 module purge
 
@@ -95,7 +107,7 @@ export NVTE_DEBUG=0
 export NVTE_DEBUG_LEVEL=0
 
 # ====================================================================
-# MODEL AND PRETRAINING CONFIGURATION (60M Olmix Setup)
+# MODEL AND PRETRAINING CONFIGURATION (30M Olmix Setup)
 # ====================================================================
 DATA_PATH=$(tr "\n" " " < "$MIX_FILE")
 DATA_CACHE_PATH="/scratch/project_462000963/users/$USER/test_output/data_cache_${EXP_NAME}"
@@ -115,24 +127,59 @@ SEQ_LENGTH=2048              # per olmix paper
 ROTARY_BASE=10000             
 # ---------------------------------------------
 
+
+# OPTIMIZER
+ADAM_BETA1=0.9
+ADAM_BETA2=0.95
+ADAM_EPS=1e-8
+LR=0.007
+MIN_LR=0
+LR_WARMUP_ITERS=500
+COOLDOWN_FRACTION=1/5
+CLIP_GRAD=1.0
+WEIGHT_DECAY=0.1    # match scaling law setup
+
+# PARALLELISM
 PIPELINE_MODEL_PARALLEL_SIZE=1
 TENSOR_MODEL_PARALLEL_SIZE=1
 CONTEXT_PARALLEL_SIZE=1
 NUM_LAYERS_PER_VIRTUAL_PIPELINE_STAGE=1
 PROFILE=0
 
-LR=0.007                     
+# TRAINING                     
+FSDP=0
 GLOBAL_BATCH_SIZE=64         
 MICRO_BATCH_SIZE=8
 RECOMPUTATION=0
 TRAIN_TOKENS=3000000000      
 
-# --- Safe Bash Calculation Engine ---
-TRAIN_TOKENS=${TRAIN_TOKENS//_}
+
+confirm_unset() {
+    local varname="$1"
+    if [ -n "${!varname+x}" ]; then
+	echo "Error: variable '$varname' should not be set." >&2
+	exit 1
+    fi
+}
+confirm_unset "TRAIN_ITERS"
+confirm_unset "LR_DECAY_ITERS"
+confirm_unset "LR_WSD_DECAY_ITERS"
+
+divide_rounding_up() {
+    echo $((($1+$2-1)/$2))
+}
+
+# Calculate TRAIN_ITERS from TRAIN_TOKENS
+TRAIN_TOKENS=${TRAIN_TOKENS//_}    # drop "_" for bash math
 ITER_TOKENS=$((SEQ_LENGTH * GLOBAL_BATCH_SIZE))
-TRAIN_ITERS=$(( (TRAIN_TOKENS + ITER_TOKENS - 1) / ITER_TOKENS ))
-LR_WSD_DECAY_ITERS=$((TRAIN_ITERS / 5))
+TRAIN_ITERS=$(divide_rounding_up $TRAIN_TOKENS $ITER_TOKENS)
+
+# Set LR_WSD_DECAY_ITERS based on COOLDOWN_FRACTION
+LR_WSD_DECAY_ITERS=$((TRAIN_ITERS*${COOLDOWN_FRACTION}))
+
+# LR_DECAY_ITERS is simply set to TRAIN_ITERS
 LR_DECAY_ITERS=$TRAIN_ITERS
+
 
 # --- Derived saving frequencies match step reductions ---
 LOG_INTERVAL=1
@@ -175,12 +222,13 @@ if [ "$TIE_WORD_EMBEDDINGS" = "0" ]; then
 fi
 
 PARALLEL_ARGS=(
-    --tensor-model-parallel-size $TENSOR_MODEL_PARALLEL_SIZE
-    --pipeline-model-parallel-size $PIPELINE_MODEL_PARALLEL_SIZE
-    --context-parallel-size $CONTEXT_PARALLEL_SIZE
-    --sequence-parallel
-    --use-distributed-optimizer
+	--tensor-model-parallel-size $TENSOR_MODEL_PARALLEL_SIZE
+	--pipeline-model-parallel-size $PIPELINE_MODEL_PARALLEL_SIZE
+	--context-parallel-size $CONTEXT_PARALLEL_SIZE
+	--sequence-parallel
+	--use-distributed-optimizer
 )
+
 
 PROFILE_ARGS=()
 
@@ -213,19 +261,20 @@ MODEL_ARGS+=(
 
 OPTIMIZER_ARGS=(
     --optimizer adam
-    --adam-beta1 0.9
-    --adam-beta2 0.95
-    --adam-eps 1e-8
+    --adam-beta1 $ADAM_BETA1
+    --adam-beta2 $ADAM_BETA2
+    --adam-eps $ADAM_EPS
     --lr $LR
-    --min-lr 0
+    --min-lr $MIN_LR
     --lr-decay-style "WSD"
     --lr-wsd-decay-style "linear"
-    --lr-warmup-iters 100
+    --lr-warmup-iters $LR_WARMUP_ITERS
     --lr-decay-iters $LR_DECAY_ITERS
     --lr-wsd-decay-iters $LR_WSD_DECAY_ITERS
-    --clip-grad 1.0
-    --weight-decay 0.1
+    --clip-grad $CLIP_GRAD
+    --weight-decay $WEIGHT_DECAY
 )
+
 
 OUTPUT_ARGS=(
     --eval-interval $EVAL_INTERVAL

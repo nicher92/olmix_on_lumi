@@ -119,7 +119,7 @@ def write_mixes_to_json(mixtures, domains):
 def make_megatron_text_files_and_bash_script(lumi_variants, prefix_map):
     """Generate Megatron .txt mix files and the bash launcher"""
     os.makedirs("./data/mixes", exist_ok=True)
-    launch_commands = []
+    
 
     for variant in lumi_variants:
         variant_id = variant["variant_id"]
@@ -137,15 +137,14 @@ def make_megatron_text_files_and_bash_script(lumi_variants, prefix_map):
                             # Distribute the domain's weight across its shards proportionally
                             shard_weight = domain_weight * (tokens / total_actual_tokens)
                             f.write(f"{shard_weight:.6f} {prefix}\n")
-
-        launch_commands.append(f"sbatch train-0.05B-ne.sh {variant_id} {mix_file_path}")
-
+        
+    
+    launch_script = f"sbatch --array=0-{len(lumi_variants) - 1} scripts/train-0.05B-ne_test.sh"
     # Create master launcher script
     launcher_script = "launch_all_swarms.sh"
     with open(launcher_script, "w") as f:
         f.write("#!/bin/bash\n\n")
-        for cmd in launch_commands:
-            f.write(cmd + "\n")
+        f.write(launch_script + "\n")
 
     os.chmod(launcher_script, 0o755)
     return launcher_script
@@ -178,7 +177,6 @@ if __name__ == "__main__":
         min_topic_strength=swarm_config.get("min_topic_strength", 0.1),
         max_topic_strength=swarm_config.get("max_topic_strength", 5.0),
         
-        # Default to 1 so olmix doesn't globally scale everything anymore
         sample_multiplier=20,
         
         enable_bound=swarm_config.get("enable_bound", True),
