@@ -8,7 +8,7 @@
 #SBATCH --cpus-per-task=7       # 7 CPUs assigned per task
 #SBATCH --mem=120G              # Total memory for the job (or you can use --mem-per-gpu=60G)
 
-#SBATCH --time=12:00:00               
+#SBATCH --time=16:00:00               
 #SBATCH --account=project_465002530
 #SBATCH --output logs/%A_%a.out
 #SBATCH --error logs/%A_%a.err

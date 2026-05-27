@@ -17,36 +17,7 @@ swarm:
   manual_topic_prior: null
   nonzero_weight: false
   existing_mix_file: null
-  manual_prior:
-    # 🌍 General Web (40%)
-    dclm_baseline: 0.20
-    nemotron_cc: 0.15
-    hplt4_cc: 0.03
-    hplt4_ia: 0.01
-    hplt4_ab: 0.01
-
-    # 📚 Academic, Books & Encyclopedias (20%)
-    finepdfs: 0.10
-    finepdfs_edu: 0.03
-    finephrase: 0.01
-    olmo_mix_wiki: 0.02
-    olmo_mix_arxiv: 0.02
-    olmo_mix_pes2o: 0.02
-
-    # 💻 Code (20%)
-    the_stack: 0.10
-    starcoder: 0.04
-    swallow_code_2_0: 0.02
-    dolma3_dolmino_mix_code: 0.04
-
-    # 🧮 Math & Reasoning (20%)
-    megamath: 0.08
-    finemath: 0.05
-    dolma3_dolmino_mix_math: 0.05
-    nemotron_pretraining_v1: 0.015
-    nemotron_pretraining_v1_1: 0.005
-
-
+ 
 datasets:
   # ==========================================
   # ENGLISH 
@@ -147,6 +118,14 @@ datasets:
   # ==========================================
   # MATH
   # ==========================================
+  swallow_math_v2:
+    multiplier : 1
+    paths: 
+      - /scratch/project_465002530/preprocessed/oellm-v1-256k/tokyotech-llm/swallow-math-v2/stage3-textbook
+      - /scratch/project_465002530/preprocessed/oellm-v1-256k/tokyotech-llm/swallow-math-v2/stage3-qa
+    open_web_math : 1
+    paths:
+      - /scratch/project_465002530/preprocessed/oellm-v1-256k/open-web-math/open-web-math
   finemath:
     multiplier: 1
     paths:
@@ -154,7 +133,6 @@ datasets:
   megamath:
     multiplier: 1
     paths:
-#      - /scratch/project_462000963/preprocessed/oellm-v1-256k/LLM360/MegaMath-full/megamath-code/megamath-code_text_document
       - /scratch/project_462000963/preprocessed/oellm-v1-256k/LLM360/MegaMath-full/megamath-qa/megamath-qa_text_document
       - /scratch/project_462000963/preprocessed/oellm-v1-256k/LLM360/MegaMath-full/megamath-text-code-block/megamath-text-code-block_text_document
       - /scratch/project_462000963/preprocessed/oellm-v1-256k/LLM360/MegaMath-full/megamath-translated-code/megamath-translated-code_text_document
@@ -168,4 +146,3 @@ datasets:
       - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/dolma3_dolmino_mix-100B-1125/sampled-10p/dolmino-math/dolmino-math_text_document
       - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/dolma3_dolmino_mix-100B-1125/sampled-10p/cranemath/cranemath_text_document
       - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/dolma3_dolmino_mix-100B-1125/sampled-10p/megamatt/megamatt_text_document
-
