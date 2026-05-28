@@ -253,7 +253,7 @@ MODEL_ARGS+=(
     --no-gradient-accumulation-fusion
     --no-bias-dropout-fusion
     --no-rope-fusion
-    --distributed-timeout-minutes 10
+    --distributed-timeout-minutes 30
     --overlap-grad-reduce
 )
 
