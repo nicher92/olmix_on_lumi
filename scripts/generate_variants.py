@@ -139,7 +139,7 @@ def make_megatron_text_files_and_bash_script(lumi_variants, prefix_map):
                             f.write(f"{shard_weight:.6f} {prefix}\n")
         
     
-    launch_script = f"sbatch --array=0-{len(lumi_variants) - 1} scripts/train-0.05B.sh"
+    launch_script = f"sbatch --array=0-{len(lumi_variants) - 1}%5 scripts/train-0.05B.sh"
     # Create master launcher script
     launcher_script = "launch_all_swarms.sh"
     with open(launcher_script, "w") as f:

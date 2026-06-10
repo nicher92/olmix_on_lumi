@@ -71,6 +71,18 @@ BIND_MASK="0x${c}000000000000,0x${c}00000000000000,0x${c}0000,0x${c}000000,0x${c
 BASE_DIR="$SLURM_SUBMIT_DIR"
 OUTPUT_DIR="/flash/project_462000963/users/$USER/ablation_output/${EXP_NAME}"
 CHECKPOINT_PATH="$OUTPUT_DIR/checkpoints"
+# --- Streamlined Early Exit Block ---
+FINAL_CHECKPOINT_DIR="$CHECKPOINT_PATH/iter_0022889"
+
+if [ -d "$FINAL_CHECKPOINT_DIR" ]; then
+    echo "=========================================================="
+    echo "Task $TASK_ID ($EXP_NAME) already finished!"
+    echo "Found final checkpoint: iter_0022889"
+    echo "Exiting immediately to save GPU billing and queue time."
+    echo "=========================================================="
+    exit 0
+fi
+
 TENSORBOARD_DIR="$OUTPUT_DIR/tensorboard/$SLURM_JOB_NAME-$SLURM_JOBID"
 WANDB_DIR="$OUTPUT_DIR/wandb"
 source ~/.hpc_secrets
@@ -180,7 +192,7 @@ LR_DECAY_ITERS=$TRAIN_ITERS
 
 
 # --- Derived saving frequencies match step reductions ---
-LOG_INTERVAL=1
+LOG_INTERVAL=20
 SAVE_INTERVAL=4000
 EVAL_INTERVAL=1000
 EVAL_ITERS=100
