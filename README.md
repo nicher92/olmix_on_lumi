@@ -21,11 +21,9 @@ Per the Olmix paper we generate unconstrained swarms to explore the mixture spac
 ./launch_all_swarms.sh - starts an array job of all mixes
 
 # TODO  
-test a couple of full runs with say 5-6 different mixes and calculate number of hours and gpu hours it will take
-test the fitting portion of a run based on fake metrics.csv, ratios.csv files
+test the fitting portion of a run based on metrics.csv, ratios.csv files - or run elsewhere
 check that BPB will be added to oellm-cli in the near future, otherwise will have to compute bpb elsewhere to get the metrics
 ensure all the datasets are available
-
 
 
 # Datasets
