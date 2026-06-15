@@ -1,0 +1,8 @@
+0.940900 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/mlfoundations/dclm-baseline-1.0-10p-sample/dclm-10p-sample
+0.009400 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/starcoder-10p-sample/starcoder-10p-sample
+0.032700 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/swallow-code-v2/sampled-10p/stage5-auto-format/python-medium
+0.000125 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/dolma3_dolmino_mix-100B-1125/sampled-10p/code-meta-reasoning/code-meta-reasoning_text_document
+0.000125 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/dolma3_dolmino_mix-100B-1125/sampled-10p/cranecode/cranecode_text_document
+0.000125 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/dolma3_dolmino_mix-100B-1125/sampled-10p/stack_edu-fim/stack_edu-fim_text_document
+0.000126 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/dolma3_dolmino_mix-100B-1125/sampled-10p/program_verifiable/program_verifiable_text_document
+0.016500 /scratch/project_465002530/preprocessed/oellm-v1-256k/common-pile/stackv2edu/stackv2_edu

@@ -1,0 +1,16 @@
+0.002400 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/mlfoundations/dclm-baseline-1.0-10p-sample/dclm-10p-sample
+0.036204 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/nemotron-cc/1.0/20p-sample/medium-high-actual-20p
+0.085309 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/hplt/4.0/pre-clean/eng_Latn/hplt-4.0-pre-clean-eng_Latn-cc_text_document
+0.034503 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/HuggingFaceFW/finepdfs-10p-sample/eng_Latn
+0.705871 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/OLMO-mix-10p-sample/Wiki-10p-sample
+0.001100 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/OLMO-mix-10p-sample/pes2o-10p-sample
+0.002600 /scratch/project_462000963/preprocessed/oellm-v1-256k/nvidia/nemotron-pretraining-specialized-v1/nemotron-pretraining-specialized-v1
+0.001100 /scratch/project_462000963/preprocessed/oellm-v1-256k/nvidia/nemotron-pretraining-specialized-v1.1/nemotron-pretraining-specialized-v1.1
+0.000400 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/swallow-code-v2/sampled-10p/stage5-auto-format/python-medium
+0.130113 /scratch/project_465002530/preprocessed/oellm-v1-256k/common-pile/stackv2/stackv2
+0.000200 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/HuggingFaceTB/finemath-full/finemath-4plus/finemath-4plus_text_document
+0.000004 /scratch/project_462000963/preprocessed/oellm-v1-256k/LLM360/MegaMath-full/megamath-qa/megamath-qa_text_document
+0.000030 /scratch/project_462000963/preprocessed/oellm-v1-256k/LLM360/MegaMath-full/megamath-text-code-block/megamath-text-code-block_text_document
+0.000004 /scratch/project_462000963/preprocessed/oellm-v1-256k/LLM360/MegaMath-full/megamath-translated-code/megamath-translated-code_text_document
+0.000152 /scratch/project_462000963/preprocessed/oellm-v1-256k/LLM360/MegaMath-full/megamath-web/megamath-web_text_document
+0.000009 /scratch/project_462000963/preprocessed/oellm-v1-256k/LLM360/MegaMath-full/megamath-web-pro/megamath-web-pro_text_document

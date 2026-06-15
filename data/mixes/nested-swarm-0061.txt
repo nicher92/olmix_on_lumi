@@ -1,0 +1,3 @@
+0.000600 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/mlfoundations/dclm-baseline-1.0-10p-sample/dclm-10p-sample
+0.990401 /scratch/project_465002530/preprocessed/oellm-v1-256k/common-pile/stackv2/stackv2
+0.008999 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/HuggingFaceTB/finemath-full/finemath-4plus/finemath-4plus_text_document

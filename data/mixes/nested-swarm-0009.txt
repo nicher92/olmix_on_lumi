@@ -1,0 +1,17 @@
+0.163084 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/mlfoundations/dclm-baseline-1.0-10p-sample/dclm-10p-sample
+0.184182 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/hplt/4.0/pre-clean/eng_Latn/hplt-4.0-pre-clean-eng_Latn-cc_text_document
+0.000800 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/hplt/4.0/pre-clean/eng_Latn/hplt-4.0-pre-clean-eng_Latn-ab_text_document
+0.053795 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/OLMO-mix-10p-sample/Wiki-10p-sample
+0.004700 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/OLMO-mix-10p-sample/arxiv-10p-sample
+0.004200 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/OLMO-mix-10p-sample/pes2o-10p-sample
+0.049095 /scratch/project_462000963/preprocessed/oellm-v1-256k/nvidia/nemotron-pretraining-specialized-v1/nemotron-pretraining-specialized-v1
+0.039596 /scratch/project_462000963/preprocessed/oellm-v1-256k/nvidia/nemotron-pretraining-specialized-v1.1/nemotron-pretraining-specialized-v1.1
+0.007599 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/swallow-code-v2/sampled-10p/stage5-auto-format/python-medium
+0.003600 /scratch/project_465002530/preprocessed/oellm-v1-256k/common-pile/stackv2/stackv2
+0.009399 /scratch/project_465002530/preprocessed/oellm-v1-256k/common-pile/stackv2edu/stackv2_edu
+0.429757 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/HuggingFaceTB/finemath-full/finemath-4plus/finemath-4plus_text_document
+0.001059 /scratch/project_462000963/preprocessed/oellm-v1-256k/LLM360/MegaMath-full/megamath-qa/megamath-qa_text_document
+0.007604 /scratch/project_462000963/preprocessed/oellm-v1-256k/LLM360/MegaMath-full/megamath-text-code-block/megamath-text-code-block_text_document
+0.001092 /scratch/project_462000963/preprocessed/oellm-v1-256k/LLM360/MegaMath-full/megamath-translated-code/megamath-translated-code_text_document
+0.038200 /scratch/project_462000963/preprocessed/oellm-v1-256k/LLM360/MegaMath-full/megamath-web/megamath-web_text_document
+0.002241 /scratch/project_462000963/preprocessed/oellm-v1-256k/LLM360/MegaMath-full/megamath-web-pro/megamath-web-pro_text_document

@@ -1,0 +1,2 @@
+0.990300 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/OLMO-mix-10p-sample/arxiv-10p-sample
+0.009700 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/OLMO-mix-10p-sample/pes2o-10p-sample

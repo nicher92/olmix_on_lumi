@@ -1,0 +1,6 @@
+0.999800 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/mlfoundations/dclm-baseline-1.0-10p-sample/dclm-10p-sample
+0.000004 /scratch/project_462000963/preprocessed/oellm-v1-256k/LLM360/MegaMath-full/megamath-qa/megamath-qa_text_document
+0.000030 /scratch/project_462000963/preprocessed/oellm-v1-256k/LLM360/MegaMath-full/megamath-text-code-block/megamath-text-code-block_text_document
+0.000004 /scratch/project_462000963/preprocessed/oellm-v1-256k/LLM360/MegaMath-full/megamath-translated-code/megamath-translated-code_text_document
+0.000152 /scratch/project_462000963/preprocessed/oellm-v1-256k/LLM360/MegaMath-full/megamath-web/megamath-web_text_document
+0.000009 /scratch/project_462000963/preprocessed/oellm-v1-256k/LLM360/MegaMath-full/megamath-web-pro/megamath-web-pro_text_document

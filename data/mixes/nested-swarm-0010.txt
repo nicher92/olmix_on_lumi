@@ -1,0 +1,3 @@
+0.001000 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/OLMO-mix-10p-sample/Wiki-10p-sample
+0.797820 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/OLMO-mix-10p-sample/pes2o-10p-sample
+0.201180 /scratch/project_462000963/preprocessed/oellm-v1-256k/nvidia/nemotron-pretraining-specialized-v1/nemotron-pretraining-specialized-v1

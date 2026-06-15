@@ -1,0 +1,3 @@
+0.001500 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/OLMO-mix-10p-sample/pes2o-10p-sample
+0.188600 /scratch/project_465002530/preprocessed/oellm-v1-256k/common-pile/stackv2/stackv2
+0.809900 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/HuggingFaceTB/finemath-full/finemath-4plus/finemath-4plus_text_document

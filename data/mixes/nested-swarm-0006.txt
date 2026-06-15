@@ -1,0 +1,3 @@
+0.003200 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/mlfoundations/dclm-baseline-1.0-10p-sample/dclm-10p-sample
+0.000300 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/OLMO-mix-10p-sample/pes2o-10p-sample
+0.996500 /scratch/project_465002530/preprocessed/oellm-v1-256k/common-pile/stackv2/stackv2

@@ -1,0 +1,3 @@
+0.849300 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/nemotron-cc/1.0/20p-sample/medium-actual-5p
+0.142900 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/HuggingFaceFW/finepdfs-edu-10p-sample/eng_Latn
+0.007800 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/HuggingFaceTB/finemath-full/finemath-4plus/finemath-4plus_text_document

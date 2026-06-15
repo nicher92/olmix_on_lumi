@@ -1,0 +1,3 @@
+0.059794 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/mlfoundations/dclm-baseline-1.0-10p-sample/dclm-10p-sample
+0.852515 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/nemotron-cc/1.0/20p-sample/high-actual-20p
+0.087691 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/hplt/4.0/pre-clean/eng_Latn/hplt-4.0-pre-clean-eng_Latn-cc_text_document

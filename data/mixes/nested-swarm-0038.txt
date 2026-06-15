@@ -1,0 +1,16 @@
+0.136900 /scratch/project_462000963/preprocessed/oellm-v1-256k/HuggingFaceFW/finephrase/finephrase_decomp
+0.001600 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/OLMO-mix-10p-sample/arxiv-10p-sample
+0.000200 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/OLMO-mix-10p-sample/pes2o-10p-sample
+0.799000 /scratch/project_462000963/preprocessed/oellm-v1-256k/nvidia/nemotron-pretraining-specialized-v1/nemotron-pretraining-specialized-v1
+0.000200 /scratch/project_462000963/preprocessed/oellm-v1-256k/nvidia/nemotron-pretraining-specialized-v1.1/nemotron-pretraining-specialized-v1.1
+0.012200 /scratch/project_465002530/preprocessed/oellm-v1-256k/common-pile/stackv2/stackv2
+0.001042 /scratch/project_462000963/preprocessed/oellm-v1-256k/LLM360/MegaMath-full/megamath-qa/megamath-qa_text_document
+0.007484 /scratch/project_462000963/preprocessed/oellm-v1-256k/LLM360/MegaMath-full/megamath-text-code-block/megamath-text-code-block_text_document
+0.001075 /scratch/project_462000963/preprocessed/oellm-v1-256k/LLM360/MegaMath-full/megamath-translated-code/megamath-translated-code_text_document
+0.037595 /scratch/project_462000963/preprocessed/oellm-v1-256k/LLM360/MegaMath-full/megamath-web/megamath-web_text_document
+0.002205 /scratch/project_462000963/preprocessed/oellm-v1-256k/LLM360/MegaMath-full/megamath-web-pro/megamath-web-pro_text_document
+0.000100 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/dolma3_dolmino_mix-100B-1125/sampled-10p/tinymath-mind/tinymath-mind_text_document
+0.000100 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/dolma3_dolmino_mix-100B-1125/sampled-10p/math-meta-reasoning/math-meta-reasoning_text_document
+0.000100 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/dolma3_dolmino_mix-100B-1125/sampled-10p/dolmino-math/dolmino-math_text_document
+0.000099 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/dolma3_dolmino_mix-100B-1125/sampled-10p/cranemath/cranemath_text_document
+0.000100 /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/dolma3_dolmino_mix-100B-1125/sampled-10p/megamatt/megamatt_text_document
