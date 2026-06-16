@@ -18,9 +18,9 @@ the suggested mixes will be put into the /mixes directory
 Per the Olmix paper we generate unconstrained swarms to explore the mixture space, and later constrain the specific mixture to a realistic mix that takes data constraints into account
 
 # Add keys before running swarms
-Add variables for wandb and huggingface token in a file here ~/.hpc_secrets - these variables are expected in /scripts/train-0.05B.sh
-export WANDB_API_KEY=""
-export HF_TOKEN=""
+Add variables for wandb and huggingface token in a file here ~/.hpc_secrets - these variables are expected in /scripts/train-0.05B.sh  
+export WANDB_API_KEY=""  
+export HF_TOKEN=""  
 
 # Command to start run
 ./launch_all_swarms.sh - starts an array job of all mixes
