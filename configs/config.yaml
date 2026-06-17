@@ -123,7 +123,8 @@ datasets:
     paths: 
       - /scratch/project_465002530/preprocessed/oellm-v1-256k/tokyotech-llm/swallow-math-v2/stage3-textbook
       - /scratch/project_465002530/preprocessed/oellm-v1-256k/tokyotech-llm/swallow-math-v2/stage3-qa
-    open_web_math : 1
+  open_web_math:
+    multiplier : 1
     paths:
       - /scratch/project_465002530/preprocessed/oellm-v1-256k/open-web-math/open-web-math
   finemath:
