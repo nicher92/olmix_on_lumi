@@ -38,4 +38,4 @@ fi
 singularity exec \
     --bind "$BIND_DIRS" \
     "$CONTAINER" \
-    "/users/$USER/megatron-to-hf.sh" "$@" "$UTILS_PATH" "$BRIDGE_PATH"
+    "${SLURM_SUBMIT_DIR}/megatron-to-hf.sh" "$@" "$UTILS_PATH" "$BRIDGE_PATH"
