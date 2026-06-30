@@ -25,6 +25,9 @@ export HF_TOKEN=""
 # Command to start run
 ./launch_all_swarms.sh - starts an array job of all mixes
 
+# Convering final checkpoints to HF models
+./scripts/convert_olmix_models_to_hf.sh - converts the final checkpoints (ie the ones ending with iter_0022889) to hf checkpoints
+
 # TODO  
 test the fitting portion of a run based on metrics.csv, ratios.csv files - or run elsewhere
 check that BPB will be added to oellm-cli in the near future, otherwise will have to compute bpb elsewhere to get the metrics
