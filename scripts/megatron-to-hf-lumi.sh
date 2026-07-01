@@ -18,7 +18,7 @@ PROJECT="project_462000963"
 CONTAINER="/scratch/project_462000963/containers/laif-rocm-6.4.4-pytorch-2.9.1-te-2.4.0-fa-2.8.0-triton-3.2.0.sif"
 
 # Directories to bind
-BIND_DIRS="/scratch,/flash,$(realpath /scratch/$PROJECT),$(realpath /flash/$PROJECT)"
+BIND_DIRS="/pfs,/scratch,/flash,$(realpath /scratch/$PROJECT),$(realpath /flash/$PROJECT)"
 
 # Paths to Megatron-Bridge-LUMI and Megatron-Bridge-utils repos
 BRIDGE_PATH="/flash/$PROJECT/tools/Megatron-Bridge-LUMI"
