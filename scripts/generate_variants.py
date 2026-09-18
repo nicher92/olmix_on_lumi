@@ -4,7 +4,7 @@ import yaml
 import numpy as np
 from datetime import datetime
 import random
-from olmix.aliases import SourceConfig, QualityConfig
+from olmix.aliases import SourceConfig, QualityConfig, TopicConfig
 from olmix.generate.synthesize_mixture import generate_weights_dirichlet
 
 def get_configs():
@@ -75,7 +75,9 @@ def olmix_leaf_order(sources):
     generate_weights_dirichlet returns weights in this order (see its docstring)."""
     order = []
     for src in sorted(sources, key=lambda s: s.name):
-        if src.quality:
+        if src.topics:
+            order += [f"{src.name}:{t.name}" for t in sorted(src.topics, key=lambda t: t.name)]
+        elif src.quality:
             order += [f"{src.name}:{q.name}" for q in sorted(src.quality, key=lambda q: q.name)]
         else:
             order.append(src.name)
@@ -170,35 +172,26 @@ if __name__ == "__main__":
         new_domains = [d for d in domains if d not in old_mix]
         
         if frozen_domains:
-            # 1. Calculate the locked internal ratios of the frozen block
-            old_mix_sum = sum(old_mix[d] for d in frozen_domains)
-            frozen_ratios = {d: old_mix[d] / old_mix_sum for d in frozen_domains}
-
-            # 2. Package the Virtual Domain tokens and priors
-            target_leaf_tokens = {"VIRTUAL_DOMAIN": sum(leaf_tokens[d] for d in frozen_domains)}
-            for d in new_domains:
-                target_leaf_tokens[d] = leaf_tokens[d]
-
-            #collapsed_domains, target_leaf_dist, _, _ = calculate_priors_and_variants(target_leaf_tokens)
-
-            # 3. Package the SourceConfigs for Olmix
-            target_sources = [SourceConfig(name="VIRTUAL_DOMAIN", paths=["virtual"])]
-            for src in sources:
-                is_new = False
-                if hasattr(src, 'quality') and src.quality:
-                    if any(f"{src.name}:{q.name}" in new_domains for q in src.quality):
-                        is_new = True
-                elif src.name in new_domains:
-                    is_new = True
-                    
-                if is_new:
-                    target_sources.append(src)
-            
-            collapsed_domains, target_leaf_dist, _, _ = calculate_priors_and_variants(target_leaf_tokens, target_sources)
+            # One source whose topics are the frozen datasets, ratios locked.
+            # olmix samples a single weight for "existing" and splits it by these.
+            total = sum(old_mix[d] for d in frozen_domains)
+            existing = SourceConfig(name="existing", topics=[
+                TopicConfig(name=d,
+                            paths=[f"{p}.bin" for p, _ in prefix_map[d]],
+                            weight=old_mix[d] / total)
+                for d in frozen_domains
+            ])
+            target_sources = [existing] + [
+                s for s in sources
+                if s.name in new_domains
+                or any(f"{s.name}:{q.name}" in new_domains for q in (s.quality or []))
+            ]
+            target_leaf_tokens = {f"existing:{d}": leaf_tokens[d] for d in frozen_domains}
+            target_leaf_tokens.update({d: leaf_tokens[d] for d in new_domains})
+            collapsed_domains, target_leaf_dist, _, _ = calculate_priors_and_variants(
+                target_leaf_tokens, target_sources)
             effective_leaves = len(new_domains) + 1
-            print(f"♻️  Mixture Reuse: Packaged {len(frozen_domains)} frozen datasets into 1 VIRTUAL_DOMAIN.")
-            print(f"♻️  Optimizing over {effective_leaves} actual dimensions.")
-
+    
     NUM_VARIANTS = 3 * (effective_leaves + 1)
     print(f"📊 Config loaded. Generating {NUM_VARIANTS} variants. Scaled total tokens: {total_tokens:,}")
 
@@ -209,6 +202,7 @@ if __name__ == "__main__":
     np.random.seed(seed)
 
     raw_mixtures = generate_weights_dirichlet(
+        nonzero_weight=swarm_config.get("nonzero_weight") or None,
         sources=target_sources,
         leaf_dist=target_leaf_dist,
         num_samples_out=NUM_VARIANTS,
@@ -231,30 +225,11 @@ if __name__ == "__main__":
     )
 
     # UNPACK the Virtual Domain back into the 27 original domains
-    unpacked_mixtures = []
-    for mix in raw_mixtures:
-        # Flatten arrays to guarantee they are 1D, avoiding any shape mismatches
-        flat_weights = np.array(mix[0]).flatten()
-        flat_reps = np.array(mix[1]).flatten()
-        
-        new_weights = []
-        new_reps = []
-        
-        for d in domains:
-            if d in frozen_domains:
-                v_idx = collapsed_domains.index("VIRTUAL_DOMAIN")
-                w = float(flat_weights[v_idx]) * frozen_ratios[d]
-                new_weights.append(w)
-                new_reps.append(float(flat_reps[v_idx]))
-            else:
-                n_idx = collapsed_domains.index(d)
-                new_weights.append(float(flat_weights[n_idx]))
-                new_reps.append(float(flat_reps[n_idx]))
-                
-        # Package back into the nested shape write_mixes_to_json expects
-        unpacked_mixtures.append((np.array([new_weights]), np.array([new_reps])))
-
-    lumi_variants = write_mixes_to_json(unpacked_mixtures, domains)
+    leaf_to_domain = {f"existing:{d}": d for d in frozen_domains}
+    out_domains = [leaf_to_domain.get(leaf, leaf) for leaf in collapsed_domains]
+    unpacked_mixtures = [(np.array([np.asarray(m[0]).flatten()]),
+                          np.array([np.asarray(m[1]).flatten()])) for m in raw_mixtures]
+    lumi_variants = write_mixes_to_json(unpacked_mixtures, out_domains)
     launcher_script = make_megatron_text_files_and_bash_script(lumi_variants, prefix_map)
 
     print(f"✅ Generated {NUM_VARIANTS} Megatron mix files in the mixes/ directory.")

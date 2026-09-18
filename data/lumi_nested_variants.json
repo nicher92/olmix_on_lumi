@@ -1,0 +1,524 @@
+[
+  {
+    "variant_id": "stage2_mix_20260918_1626-0000",
+    "mix": {
+      "open_web_math": {
+        "weight": 0.0206,
+        "repetition_factor": 1.0
+      },
+      "swallow_math_v2": {
+        "weight": 0.0137,
+        "repetition_factor": 1.0
+      },
+      "mixture_vitae": {
+        "weight": 0.0409,
+        "repetition_factor": 1.0
+      },
+      "nemotron_mind": {
+        "weight": 0.0648,
+        "repetition_factor": 1.0
+      },
+      "the_stack_v2": {
+        "weight": 0.7707,
+        "repetition_factor": 1.0
+      },
+      "the_stackv2_edu": {
+        "weight": 0.0893,
+        "repetition_factor": 1.0
+      }
+    }
+  },
+  {
+    "variant_id": "stage2_mix_20260918_1626-0001",
+    "mix": {
+      "open_web_math": {
+        "weight": 0.0708,
+        "repetition_factor": 1.0
+      },
+      "swallow_math_v2": {
+        "weight": 0.0472,
+        "repetition_factor": 1.0
+      },
+      "mixture_vitae": {
+        "weight": 0.5862,
+        "repetition_factor": 1.0
+      },
+      "nemotron_mind": {
+        "weight": 0.0002,
+        "repetition_factor": 1.0
+      },
+      "the_stack_v2": {
+        "weight": 0.1755,
+        "repetition_factor": 1.0
+      },
+      "the_stackv2_edu": {
+        "weight": 0.1201,
+        "repetition_factor": 1.0
+      }
+    }
+  },
+  {
+    "variant_id": "stage2_mix_20260918_1626-0002",
+    "mix": {
+      "open_web_math": {
+        "weight": 0.001,
+        "repetition_factor": 1.0
+      },
+      "swallow_math_v2": {
+        "weight": 0.0007,
+        "repetition_factor": 1.0
+      },
+      "mixture_vitae": {
+        "weight": 0.0589,
+        "repetition_factor": 1.0
+      },
+      "nemotron_mind": {
+        "weight": 0.0258,
+        "repetition_factor": 1.0
+      },
+      "the_stack_v2": {
+        "weight": 0.8527,
+        "repetition_factor": 1.0
+      },
+      "the_stackv2_edu": {
+        "weight": 0.0609,
+        "repetition_factor": 1.0
+      }
+    }
+  },
+  {
+    "variant_id": "stage2_mix_20260918_1626-0003",
+    "mix": {
+      "open_web_math": {
+        "weight": 0.079108,
+        "repetition_factor": 1.0
+      },
+      "swallow_math_v2": {
+        "weight": 0.052705,
+        "repetition_factor": 1.0
+      },
+      "mixture_vitae": {
+        "weight": 0.060006,
+        "repetition_factor": 1.0
+      },
+      "nemotron_mind": {
+        "weight": 0.009401,
+        "repetition_factor": 1.0
+      },
+      "the_stack_v2": {
+        "weight": 0.79638,
+        "repetition_factor": 1.0
+      },
+      "the_stackv2_edu": {
+        "weight": 0.0024,
+        "repetition_factor": 1.0
+      }
+    }
+  },
+  {
+    "variant_id": "stage2_mix_20260918_1626-0004",
+    "mix": {
+      "open_web_math": {
+        "weight": 0.0103,
+        "repetition_factor": 1.0
+      },
+      "swallow_math_v2": {
+        "weight": 0.0068,
+        "repetition_factor": 1.0
+      },
+      "mixture_vitae": {
+        "weight": 0.0391,
+        "repetition_factor": 1.0
+      },
+      "nemotron_mind": {
+        "weight": 0.0151,
+        "repetition_factor": 1.0
+      },
+      "the_stack_v2": {
+        "weight": 0.9031,
+        "repetition_factor": 1.0
+      },
+      "the_stackv2_edu": {
+        "weight": 0.0256,
+        "repetition_factor": 1.0
+      }
+    }
+  },
+  {
+    "variant_id": "stage2_mix_20260918_1626-0005",
+    "mix": {
+      "open_web_math": {
+        "weight": 0.2154,
+        "repetition_factor": 1.0
+      },
+      "swallow_math_v2": {
+        "weight": 0.1436,
+        "repetition_factor": 1.0
+      },
+      "mixture_vitae": {
+        "weight": 0.0024,
+        "repetition_factor": 1.0
+      },
+      "nemotron_mind": {
+        "weight": 0.4469,
+        "repetition_factor": 1.0
+      },
+      "the_stack_v2": {
+        "weight": 0.0089,
+        "repetition_factor": 1.0
+      },
+      "the_stackv2_edu": {
+        "weight": 0.1828,
+        "repetition_factor": 1.0
+      }
+    }
+  },
+  {
+    "variant_id": "stage2_mix_20260918_1626-0006",
+    "mix": {
+      "open_web_math": {
+        "weight": 0.022502,
+        "repetition_factor": 1.0
+      },
+      "swallow_math_v2": {
+        "weight": 0.015002,
+        "repetition_factor": 1.0
+      },
+      "mixture_vitae": {
+        "weight": 0.248425,
+        "repetition_factor": 1.0
+      },
+      "nemotron_mind": {
+        "weight": 0.006601,
+        "repetition_factor": 1.0
+      },
+      "the_stack_v2": {
+        "weight": 0.560356,
+        "repetition_factor": 1.0
+      },
+      "the_stackv2_edu": {
+        "weight": 0.147115,
+        "repetition_factor": 1.0
+      }
+    }
+  },
+  {
+    "variant_id": "stage2_mix_20260918_1626-0007",
+    "mix": {
+      "open_web_math": {
+        "weight": 0.0005,
+        "repetition_factor": 1.0
+      },
+      "swallow_math_v2": {
+        "weight": 0.0004,
+        "repetition_factor": 1.0
+      },
+      "mixture_vitae": {
+        "weight": 0.361864,
+        "repetition_factor": 1.0
+      },
+      "nemotron_mind": {
+        "weight": 0.031997,
+        "repetition_factor": 1.0
+      },
+      "the_stack_v2": {
+        "weight": 0.541646,
+        "repetition_factor": 1.0
+      },
+      "the_stackv2_edu": {
+        "weight": 0.063594,
+        "repetition_factor": 1.0
+      }
+    }
+  },
+  {
+    "variant_id": "stage2_mix_20260918_1626-0008",
+    "mix": {
+      "open_web_math": {
+        "weight": 0.242,
+        "repetition_factor": 1.0
+      },
+      "swallow_math_v2": {
+        "weight": 0.1613,
+        "repetition_factor": 1.0
+      },
+      "mixture_vitae": {
+        "weight": 0.005,
+        "repetition_factor": 1.0
+      },
+      "nemotron_mind": {
+        "weight": 0.2466,
+        "repetition_factor": 1.0
+      },
+      "the_stack_v2": {
+        "weight": 0.3432,
+        "repetition_factor": 1.0
+      },
+      "the_stackv2_edu": {
+        "weight": 0.0019,
+        "repetition_factor": 1.0
+      }
+    }
+  },
+  {
+    "variant_id": "stage2_mix_20260918_1626-0009",
+    "mix": {
+      "open_web_math": {
+        "weight": 0.0056,
+        "repetition_factor": 1.0
+      },
+      "swallow_math_v2": {
+        "weight": 0.0037,
+        "repetition_factor": 1.0
+      },
+      "mixture_vitae": {
+        "weight": 0.1899,
+        "repetition_factor": 1.0
+      },
+      "nemotron_mind": {
+        "weight": 0.7261,
+        "repetition_factor": 1.0
+      },
+      "the_stack_v2": {
+        "weight": 0.0729,
+        "repetition_factor": 1.0
+      },
+      "the_stackv2_edu": {
+        "weight": 0.0018,
+        "repetition_factor": 1.0
+      }
+    }
+  },
+  {
+    "variant_id": "stage2_mix_20260918_1626-0010",
+    "mix": {
+      "open_web_math": {
+        "weight": 0.0027,
+        "repetition_factor": 1.0
+      },
+      "swallow_math_v2": {
+        "weight": 0.0018,
+        "repetition_factor": 1.0
+      },
+      "mixture_vitae": {
+        "weight": 0.0696,
+        "repetition_factor": 1.0
+      },
+      "nemotron_mind": {
+        "weight": 0.4159,
+        "repetition_factor": 1.0
+      },
+      "the_stack_v2": {
+        "weight": 0.4993,
+        "repetition_factor": 1.0
+      },
+      "the_stackv2_edu": {
+        "weight": 0.0107,
+        "repetition_factor": 1.0
+      }
+    }
+  },
+  {
+    "variant_id": "stage2_mix_20260918_1626-0011",
+    "mix": {
+      "open_web_math": {
+        "weight": 0.024698,
+        "repetition_factor": 1.0
+      },
+      "swallow_math_v2": {
+        "weight": 0.016398,
+        "repetition_factor": 1.0
+      },
+      "mixture_vitae": {
+        "weight": 0.050295,
+        "repetition_factor": 1.0
+      },
+      "nemotron_mind": {
+        "weight": 0.005899,
+        "repetition_factor": 1.0
+      },
+      "the_stack_v2": {
+        "weight": 0.881712,
+        "repetition_factor": 1.0
+      },
+      "the_stackv2_edu": {
+        "weight": 0.020998,
+        "repetition_factor": 1.0
+      }
+    }
+  },
+  {
+    "variant_id": "stage2_mix_20260918_1626-0012",
+    "mix": {
+      "open_web_math": {
+        "weight": 0.068,
+        "repetition_factor": 1.0
+      },
+      "swallow_math_v2": {
+        "weight": 0.0454,
+        "repetition_factor": 1.0
+      },
+      "mixture_vitae": {
+        "weight": 0.3722,
+        "repetition_factor": 1.0
+      },
+      "nemotron_mind": {
+        "weight": 0.0079,
+        "repetition_factor": 1.0
+      },
+      "the_stack_v2": {
+        "weight": 0.3165,
+        "repetition_factor": 1.0
+      },
+      "the_stackv2_edu": {
+        "weight": 0.19,
+        "repetition_factor": 1.0
+      }
+    }
+  },
+  {
+    "variant_id": "stage2_mix_20260918_1626-0013",
+    "mix": {
+      "open_web_math": {
+        "weight": 0.023402,
+        "repetition_factor": 1.0
+      },
+      "swallow_math_v2": {
+        "weight": 0.015602,
+        "repetition_factor": 1.0
+      },
+      "mixture_vitae": {
+        "weight": 0.0016,
+        "repetition_factor": 1.0
+      },
+      "nemotron_mind": {
+        "weight": 0.110411,
+        "repetition_factor": 1.0
+      },
+      "the_stack_v2": {
+        "weight": 0.808681,
+        "repetition_factor": 1.0
+      },
+      "the_stackv2_edu": {
+        "weight": 0.040304,
+        "repetition_factor": 1.0
+      }
+    }
+  },
+  {
+    "variant_id": "stage2_mix_20260918_1626-0014",
+    "mix": {
+      "open_web_math": {
+        "weight": 0.0095,
+        "repetition_factor": 1.0
+      },
+      "swallow_math_v2": {
+        "weight": 0.0064,
+        "repetition_factor": 1.0
+      },
+      "mixture_vitae": {
+        "weight": 0.3876,
+        "repetition_factor": 1.0
+      },
+      "nemotron_mind": {
+        "weight": 0.0352,
+        "repetition_factor": 1.0
+      },
+      "the_stack_v2": {
+        "weight": 0.1274,
+        "repetition_factor": 1.0
+      },
+      "the_stackv2_edu": {
+        "weight": 0.4339,
+        "repetition_factor": 1.0
+      }
+    }
+  },
+  {
+    "variant_id": "stage2_mix_20260918_1626-0015",
+    "mix": {
+      "open_web_math": {
+        "weight": 0.0512,
+        "repetition_factor": 1.0
+      },
+      "swallow_math_v2": {
+        "weight": 0.0342,
+        "repetition_factor": 1.0
+      },
+      "mixture_vitae": {
+        "weight": 0.0681,
+        "repetition_factor": 1.0
+      },
+      "nemotron_mind": {
+        "weight": 0.1968,
+        "repetition_factor": 1.0
+      },
+      "the_stack_v2": {
+        "weight": 0.6276,
+        "repetition_factor": 1.0
+      },
+      "the_stackv2_edu": {
+        "weight": 0.0221,
+        "repetition_factor": 1.0
+      }
+    }
+  },
+  {
+    "variant_id": "stage2_mix_20260918_1626-0016",
+    "mix": {
+      "open_web_math": {
+        "weight": 0.012901,
+        "repetition_factor": 1.0
+      },
+      "swallow_math_v2": {
+        "weight": 0.008601,
+        "repetition_factor": 1.0
+      },
+      "mixture_vitae": {
+        "weight": 0.252325,
+        "repetition_factor": 1.0
+      },
+      "nemotron_mind": {
+        "weight": 0.076008,
+        "repetition_factor": 1.0
+      },
+      "the_stack_v2": {
+        "weight": 0.572257,
+        "repetition_factor": 1.0
+      },
+      "the_stackv2_edu": {
+        "weight": 0.077908,
+        "repetition_factor": 1.0
+      }
+    }
+  },
+  {
+    "variant_id": "stage2_mix_20260918_1626-0017",
+    "mix": {
+      "open_web_math": {
+        "weight": 0.005701,
+        "repetition_factor": 1.0
+      },
+      "swallow_math_v2": {
+        "weight": 0.0038,
+        "repetition_factor": 1.0
+      },
+      "mixture_vitae": {
+        "weight": 0.613561,
+        "repetition_factor": 1.0
+      },
+      "nemotron_mind": {
+        "weight": 0.0031,
+        "repetition_factor": 1.0
+      },
+      "the_stack_v2": {
+        "weight": 0.238824,
+        "repetition_factor": 1.0
+      },
+      "the_stackv2_edu": {
+        "weight": 0.135014,
+        "repetition_factor": 1.0
+      }
+    }
+  }
+]
