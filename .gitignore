@@ -1,0 +1,6 @@
+logs/
+scripts/logs/
+__pycache__/
+*.pyc
+data/mixes/
+fix.patch
