@@ -24,7 +24,7 @@ set -euo pipefail
 
 TASK_ID=${SLURM_ARRAY_TASK_ID:-0}
 TASK_ID_PADDED=$(printf "%04d" $TASK_ID)
-EXP_NAME="nested-swarm-${TASK_ID_PADDED}"
+EXP_NAME="stage2_mix_20260629_0957-0000-${TASK_ID_PADDED}"
 MIX_FILE="data/mixes/${EXP_NAME}.txt"
 
 

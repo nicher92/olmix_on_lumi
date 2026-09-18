@@ -28,10 +28,13 @@ export HF_TOKEN=""
 # Convering final checkpoints to HF models
 ./scripts/convert_olmix_models_to_hf.sh - converts the final checkpoints (ie the ones ending with iter_0022889) to hf checkpoints
 
+# Running evals with BPB
+uv tool install -p 3.12 --force git+https://github.com/nicher92/oellm-eval.git@bpb-metrics
+export HF_HOME=/scratch/project_465002530/cache/huggingface
+oellm-eval schedule --models "<path to model>" --task_groups "bpb-core"
+
 # TODO  
 test the fitting portion of a run based on metrics.csv, ratios.csv files - or run elsewhere
-check that BPB will be added to oellm-cli in the near future, otherwise will have to compute bpb elsewhere to get the metrics
-ensure all the datasets are available
 
 
 # Datasets

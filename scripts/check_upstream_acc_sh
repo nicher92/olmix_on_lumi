@@ -1,0 +1,63 @@
+#!/bin/bash
+# Cross-check the BPB tasks against the stock lm-eval tasks they were derived
+# from, on the same checkpoint.
+#
+# The BPB tasks reimplement process_results to score the gold continuation. If
+# a gold index were resolved wrongly, BPB would still look plausible -- it would
+# just be measuring the wrong answer. Comparing accuracy against the upstream
+# task is what catches that: the _bpb variants report acc alongside BPB, and for
+# any task whose prompt was copied verbatim the two must agree exactly.
+#
+# Usage:
+#   ./scripts/check_upstream_acc.sh <model-dir>
+
+set -euo pipefail
+
+[ -f ~/.hpc_secrets ] && source ~/.hpc_secrets
+
+if [ -z "${HF_HOME:-}" ]; then
+    echo "[error] HF_HOME is not set. Point it at a dataset cache, e.g." >&2
+    echo "        export HF_HOME=/scratch/<your-project>/cache/huggingface" >&2
+    exit 1
+fi
+
+if [ $# -ne 1 ]; then
+    echo "usage: $0 <model-dir>" >&2
+    exit 1
+fi
+
+CKPT="$1"
+if ! ls "$CKPT"/*.safetensors >/dev/null 2>&1; then
+    echo "[error] no *.safetensors in: $CKPT" >&2
+    exit 1
+fi
+
+# The stock counterparts of the ten bpb-core tasks.
+TASKS="arc_easy,arc_challenge,hellaswag,piqa,openbookqa,boolq,copa,commonsense_qa,social_iqa,winogrande"
+
+oellm-eval schedule \
+    --models "$CKPT" \
+    --tasks "$TASKS" \
+    --n_shot 0 \
+    --max_array_len 1 \
+    --slurm_template_var '{"PARTITION":"dev-g","SLURM_MEM":"16G","TIME":"02:00:00"}'
+
+cat <<'EOF'
+
+When the job finishes, compare accuracies:
+
+  BASE=/scratch/<project>/oellm-cli-shared-evals/$USER
+  RUN=$(ls -d $BASE/*/ | tail -1)
+  grep -h "|acc " $RUN/slurm_logs/*.out | sort
+
+Compare against the acc values from your bpb run. For the eight tasks whose
+prompts were copied verbatim from upstream -- arc_easy, arc_challenge,
+hellaswag, piqa, openbookqa, boolq, copa, winogrande, social_iqa -- accuracy
+must match exactly. A mismatch there means that task's gold index is wrong and
+its BPB is scoring the wrong continuation.
+
+commonsense_qa is the deliberate exception: the stock task scores the letters
+A-E, while commonsense_qa_bpb scores the answer text (cloze form), so its
+accuracy will differ. That is by design -- BPB over a single letter would
+measure format-following rather than knowledge.
+EOF

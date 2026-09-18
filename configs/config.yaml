@@ -4,6 +4,7 @@ settings:
   seed: 42
 
 swarm:
+  existing_mix_file: "data/stage_1_optimal.json"
   minimum_source_weight: 0.0001
   minimum_topic_weight: 0.0001
   source_temperature: 0.5
@@ -16,7 +17,6 @@ swarm:
   manual_prior: null
   manual_topic_prior: null
   nonzero_weight: false
-  existing_mix_file: null
  
 datasets:
   # ==========================================
@@ -54,15 +54,17 @@ datasets:
     multiplier: 10
     paths:
       - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/HuggingFaceFW/finepdfs-10p-sample/eng_Latn
+  
   finepdfs_edu:
     multiplier: 10
     paths:
       - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/HuggingFaceFW/finepdfs-edu-10p-sample/eng_Latn
+  
   finephrase:
     multiplier: 1
     paths:
       - /scratch/project_462000963/preprocessed/oellm-v1-256k/HuggingFaceFW/finephrase/finephrase_decomp
-      
+  
   olmo_mix_wiki:
     multiplier: 10
     paths:
@@ -85,6 +87,22 @@ datasets:
     paths:
       - /scratch/project_462000963/preprocessed/oellm-v1-256k/nvidia/nemotron-pretraining-specialized-v1.1/nemotron-pretraining-specialized-v1.1
 
+  nemotron_mind:
+    multiplier: 1
+    paths:
+      - /scratch/project_465002530/preprocessed/oellm-v1-256k/nemotron-mind/nemotron-mind-TWO_STUDENTS-train
+      - /scratch/project_465002530/preprocessed/oellm-v1-256k/nemotron-mind/nemotron-mind-LAYMAN_KNOWALL-train
+      - /scratch/project_465002530/preprocessed/oellm-v1-256k/nemotron-mind/nemotron-mind-INTERVIEW-train
+      - /scratch/project_465002530/preprocessed/oellm-v1-256k/nemotron-mind/nemotron-mind-DEBATE-train
+      - /scratch/project_465002530/preprocessed/oellm-v1-256k/nemotron-mind/nemotron-mind-PROBLEM_SOLVING-train
+      - /scratch/project_465002530/preprocessed/oellm-v1-256k/nemotron-mind/nemotron-mind-TWO_PROFESSORS-train
+      - /scratch/project_465002530/preprocessed/oellm-v1-256k/nemotron-mind/nemotron-mind-TEACHER_STUDENT-train
+  
+  mixture_vitae:
+    multiplier: 1
+    paths: 
+      - /scratch/project_465002530/users/vitiugin/data_tok/MixtureVitae-v1-decontaminated
+      
   # ==========================================
   # CODE
   # ==========================================
@@ -92,10 +110,12 @@ datasets:
     multiplier: 10
     paths:
       - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/starcoder-10p-sample/starcoder-10p-sample
+  
   swallow_code_2_0:
     multiplier: 10
     paths:
       - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/swallow-code-v2/sampled-10p/stage5-auto-format/python-medium
+  
   dolma3_dolmino_mix_code:
     multiplier: 10
     paths:
@@ -103,14 +123,17 @@ datasets:
       - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/dolma3_dolmino_mix-100B-1125/sampled-10p/cranecode/cranecode_text_document
       - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/dolma3_dolmino_mix-100B-1125/sampled-10p/stack_edu-fim/stack_edu-fim_text_document
       - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/allenai/dolma3_dolmino_mix-100B-1125/sampled-10p/program_verifiable/program_verifiable_text_document
+  
   the_stack:
     multiplier: 10
     paths:
       - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/the-stack/1.2/data/sampled-10p/00_ALL_LANGUAGES/all-languages
+  
   the_stack_v2:
     multiplier: 1
     paths: 
       - /scratch/project_465002530/preprocessed/oellm-v1-256k/common-pile/stackv2/stackv2
+  
   the_stackv2_edu:
     multiplier: 1
     paths: 
@@ -123,14 +146,17 @@ datasets:
     paths: 
       - /scratch/project_465002530/preprocessed/oellm-v1-256k/tokyotech-llm/swallow-math-v2/stage3-textbook
       - /scratch/project_465002530/preprocessed/oellm-v1-256k/tokyotech-llm/swallow-math-v2/stage3-qa
+  
   open_web_math:
     multiplier : 1
     paths:
       - /scratch/project_465002530/preprocessed/oellm-v1-256k/open-web-math/open-web-math
+  
   finemath:
     multiplier: 1
     paths:
       - /scratch/project_462000963/preprocessed/oellm-v1-256k/catalogue/HuggingFaceTB/finemath-full/finemath-4plus/finemath-4plus_text_document
+  
   megamath:
     multiplier: 1
     paths:
@@ -139,6 +165,7 @@ datasets:
       - /scratch/project_462000963/preprocessed/oellm-v1-256k/LLM360/MegaMath-full/megamath-translated-code/megamath-translated-code_text_document
       - /scratch/project_462000963/preprocessed/oellm-v1-256k/LLM360/MegaMath-full/megamath-web/megamath-web_text_document
       - /scratch/project_462000963/preprocessed/oellm-v1-256k/LLM360/MegaMath-full/megamath-web-pro/megamath-web-pro_text_document
+  
   dolma3_dolmino_mix_math:
     multiplier: 10
     paths:
