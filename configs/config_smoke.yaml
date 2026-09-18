@@ -15,8 +15,15 @@ swarm:
   enable_bound: true
   manual_prior: null
   manual_topic_prior: null
-  nonzero_weight: false
   existing_mix_file: "data/smoke_frozen.json"
+  nonzero_weight:
+    - existing
+    - mixture_vitae
+    - nemotron_mind
+    - the_stack_v2
+    - the_stackv2_edu
+
+
 
 datasets:
   nemotron_mind:
