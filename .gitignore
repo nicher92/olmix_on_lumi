@@ -1,5 +1,6 @@
 logs/
 scripts/logs/
 __pycache__/
-.pytest_cache/
+*.pyc
+data/mixes/
 fix.patch

@@ -1,0 +1,57 @@
+settings:
+  max_tokens: 3000000000
+  repetition_factor: 5.0
+  seed: 42
+
+swarm:
+  minimum_source_weight: 0.0001
+  minimum_topic_weight: 0.0001
+  source_temperature: 0.5
+  topic_temperature: 0.5
+  min_source_strength: 0.01
+  max_source_strength: 5.0
+  min_topic_strength: 0.01
+  max_topic_strength: 5.0
+  enable_bound: true
+  manual_prior: null
+  manual_topic_prior: null
+  nonzero_weight: false
+  existing_mix_file: "data/smoke_frozen.json"
+
+datasets:
+  nemotron_mind:
+    multiplier: 1
+    paths:
+      - /scratch/project_465002530/preprocessed/oellm-v1-256k/nemotron-mind/nemotron-mind-TWO_STUDENTS-train
+      - /scratch/project_465002530/preprocessed/oellm-v1-256k/nemotron-mind/nemotron-mind-LAYMAN_KNOWALL-train
+      - /scratch/project_465002530/preprocessed/oellm-v1-256k/nemotron-mind/nemotron-mind-INTERVIEW-train
+      - /scratch/project_465002530/preprocessed/oellm-v1-256k/nemotron-mind/nemotron-mind-DEBATE-train
+      - /scratch/project_465002530/preprocessed/oellm-v1-256k/nemotron-mind/nemotron-mind-PROBLEM_SOLVING-train
+      - /scratch/project_465002530/preprocessed/oellm-v1-256k/nemotron-mind/nemotron-mind-TWO_PROFESSORS-train
+      - /scratch/project_465002530/preprocessed/oellm-v1-256k/nemotron-mind/nemotron-mind-TEACHER_STUDENT-train
+
+  mixture_vitae:
+    multiplier: 1
+    paths:
+      - /scratch/project_465002530/users/vitiugin/data_tok/MixtureVitae-v1-decontaminated
+
+  the_stack_v2:
+    multiplier: 1
+    paths:
+      - /scratch/project_465002530/preprocessed/oellm-v1-256k/common-pile/stackv2/stackv2
+
+  the_stackv2_edu:
+    multiplier: 1
+    paths:
+      - /scratch/project_465002530/preprocessed/oellm-v1-256k/common-pile/stackv2edu/stackv2_edu
+
+  swallow_math_v2:
+    multiplier: 1
+    paths:
+      - /scratch/project_465002530/preprocessed/oellm-v1-256k/tokyotech-llm/swallow-math-v2/stage3-textbook
+      - /scratch/project_465002530/preprocessed/oellm-v1-256k/tokyotech-llm/swallow-math-v2/stage3-qa
+
+  open_web_math:
+    multiplier: 1
+    paths:
+      - /scratch/project_465002530/preprocessed/oellm-v1-256k/open-web-math/open-web-math

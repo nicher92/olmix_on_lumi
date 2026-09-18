@@ -3,12 +3,12 @@ import json
 import yaml
 import numpy as np
 from datetime import datetime
-
+import random
 from olmix.aliases import SourceConfig, QualityConfig
 from olmix.generate.synthesize_mixture import generate_weights_dirichlet
 
 def get_configs():
-    with open("./configs/config.yaml", "r") as f:
+    with open("./configs/config_smoke.yaml", "r") as f:
         config = yaml.safe_load(f)
     return config["settings"], config.get("swarm", {}), config["datasets"]
 
@@ -69,11 +69,27 @@ def parse_yaml(datasets_config):
 
     return leaf_tokens, sources, prefix_map
 
-def calculate_priors_and_variants(leaf_tokens):
-    leaf_tokens = {k: v for k, v in leaf_tokens.items() if v > 0}
+
+def olmix_leaf_order(sources):
+    """Leaf order olmix works in: sources sorted by name, quality sorted within each.
+    generate_weights_dirichlet returns weights in this order (see its docstring)."""
+    order = []
+    for src in sorted(sources, key=lambda s: s.name):
+        if src.quality:
+            order += [f"{src.name}:{q.name}" for q in sorted(src.quality, key=lambda q: q.name)]
+        else:
+            order.append(src.name)
+    return order
+
+
+def calculate_priors_and_variants(leaf_tokens, sources):
+    domains = olmix_leaf_order(sources)
+    missing = [d for d in domains if leaf_tokens.get(d, 0) <= 0]
+    if missing:
+        raise SystemExit(f"ERROR: no tokens for {missing}. olmix needs a prior for every leaf.")
+    leaf_tokens = {k: leaf_tokens[k] for k in domains}
     total_tokens = sum(leaf_tokens.values())
     leaf_dist = {name: count / total_tokens for name, count in leaf_tokens.items()}
-    domains = list(leaf_dist.keys())
     return domains, leaf_dist, leaf_tokens, total_tokens
 
 
@@ -133,7 +149,7 @@ def make_megatron_text_files_and_bash_script(lumi_variants, prefix_map):
 if __name__ == "__main__":
     settings, swarm_config, datasets_config = get_configs()
     leaf_tokens, sources, prefix_map = parse_yaml(datasets_config)
-    domains, leaf_dist, _, total_tokens = calculate_priors_and_variants(leaf_tokens)
+    domains, leaf_dist, _, total_tokens = calculate_priors_and_variants(leaf_tokens, sources)
 
     existing_mix_path = swarm_config.get("existing_mix_file")
     
@@ -163,7 +179,7 @@ if __name__ == "__main__":
             for d in new_domains:
                 target_leaf_tokens[d] = leaf_tokens[d]
 
-            collapsed_domains, target_leaf_dist, _, _ = calculate_priors_and_variants(target_leaf_tokens)
+            #collapsed_domains, target_leaf_dist, _, _ = calculate_priors_and_variants(target_leaf_tokens)
 
             # 3. Package the SourceConfigs for Olmix
             target_sources = [SourceConfig(name="VIRTUAL_DOMAIN", paths=["virtual"])]
@@ -177,7 +193,8 @@ if __name__ == "__main__":
                     
                 if is_new:
                     target_sources.append(src)
-
+            
+            collapsed_domains, target_leaf_dist, _, _ = calculate_priors_and_variants(target_leaf_tokens, target_sources)
             effective_leaves = len(new_domains) + 1
             print(f"♻️  Mixture Reuse: Packaged {len(frozen_domains)} frozen datasets into 1 VIRTUAL_DOMAIN.")
             print(f"♻️  Optimizing over {effective_leaves} actual dimensions.")
@@ -186,6 +203,11 @@ if __name__ == "__main__":
     print(f"📊 Config loaded. Generating {NUM_VARIANTS} variants. Scaled total tokens: {total_tokens:,}")
 
     # Generate Mixtures (We pass existing_mix_file=None to bypass the buggy backend features)
+    
+    seed = settings.get("seed", 42)
+    random.seed(seed)
+    np.random.seed(seed)
+
     raw_mixtures = generate_weights_dirichlet(
         sources=target_sources,
         leaf_dist=target_leaf_dist,
