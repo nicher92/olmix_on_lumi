@@ -26,7 +26,7 @@ TASK_ID=${SLURM_ARRAY_TASK_ID:-0}
 TASK_ID_PADDED=$(printf "%04d" $TASK_ID)
 MIX_PREFIX=${MIX_PREFIX:?"set MIX_PREFIX (launch_all_swarms.sh does this)"}
 EXP_NAME="${MIX_PREFIX}-${TASK_ID_PADDED}"
-MIX_FILE="data/mixes/${EXP_NAME}.txt"
+MIX_FILE="data/runs/${MIX_PREFIX}/mixes/${EXP_NAME}.txt"
 
 MEGATRON_DIR="/flash/project_465002530/tools/OpenEuroLLM-NVIDIA-Megatron-LM"
 

@@ -1,0 +1,71 @@
+# Smoke test for mixture reuse: freeze the flag-option5 mix as "existing"
+# and let the swarm vary one dataset (open_web_math, held out of the frozen JSON).
+settings:
+  max_tokens: 300000000      # small test run; raise for a real swarm
+  repetition_factor: 5.0
+  seed: 42
+
+swarm:
+  minimum_source_weight: 0.0001
+  minimum_topic_weight: 0.0001
+  source_temperature: 1.0
+  min_source_strength: 1
+  max_source_strength: 20
+  existing_mix_file: "data/flag_frozen.json"
+  topic_temperature: 0.5
+  min_topic_strength: 0.01
+  max_topic_strength: 5.0
+  enable_bound: true
+  manual_topic_prior: null
+  manual_prior:
+    existing: 0.95
+    open_web_math: 0.05
+  nonzero_weight:
+    - existing
+    - open_web_math
+
+datasets:
+  nemotron_cc_ha:
+    paths: [/scratch/project_465002530/preprocessed/oellm-v1-256k/catalogue/nemotron-cc/1.0/10p-sample/nemotron-ha-10p-sample]
+  nemotron_cc_mha:
+    paths: [/scratch/project_465002530/preprocessed/oellm-v1-256k/catalogue/nemotron-cc/1.0/10p-sample/nemotron-mha-10p-sample]
+  dclm_baseline:
+    paths: [/scratch/project_465002530/preprocessed/oellm-v1-256k/catalogue/mlfoundations/dclm-baseline-1.0-10p-sample/dclm-10p-sample]
+  finepdfs_edu:
+    paths: [/scratch/project_465002530/training/collection/flag/finepdfs-edu-1.0.0/megatron-lm/eng_Latn/shard_0000_text_document]
+  hplt4_ab:
+    paths: [/scratch/project_465002530/training/collection/flag/hplt-4.0/megatron-lm/clean/eng_Latn/ab/shard_0000_text_document]
+  hplt4_cc:
+    paths: [/scratch/project_465002530/training/collection/flag/hplt-4.0/megatron-lm/clean/eng_Latn/ccc/shard_0001_text_document]
+  hplt4_ia:
+    paths: [/scratch/project_465002530/training/collection/flag/hplt-4.0/megatron-lm/clean/eng_Latn/ia/shard_0001_text_document]
+  finephrase:
+    paths: [/scratch/project_465002530/training/collection/flag/finephrase-0.0.0/megatron-lm/shard_0000_text_document]
+  mixture_vitae:
+    paths: [/scratch/project_465002530/users/vitiugin/data_tok/MixtureVitae-v1-decontaminated]
+  nemotron_pretraining_v1:
+    paths: [/scratch/project_465002530/training/collection/flag/nemotron-pretraining-specialized-1.0/megatron-lm/shard_0000_text_document]
+  nemotron_pretraining_v1_1:
+    paths: [/scratch/project_465002530/training/collection/flag/nemotron-pretraining-specialized-1.1/megatron-lm/shard_0000_text_document]
+  nemotron_mind:
+    paths: [/scratch/project_465002530/training/collection/flag/nemotron-mind-0.0/megatron-lm/shard_0000_text_document]
+  agenttrove:
+    paths: [/scratch/project_465002530/users/vitiugin/data_tok/agenttrove]
+  finemath_3plus:
+    paths: [/scratch/project_465002530/training/collection/flag/finemath-0.0.0/megatron-lm/finemath-3plus/shard_0000_text_document]
+  megamath:
+    paths: [/scratch/project_465002530/users/vitiugin/data_tok/megamath]
+  swallow_math_v2:
+    paths: [/scratch/project_465002530/training/collection/flag/swallow-math-2.0/megatron-lm/shard_0000_text_document]
+  dolmino_math:
+    paths: [/scratch/project_465002530/users/vitiugin/data_tok/dolma3_dolmino_mix-100B-1125/dolmino-math]
+  open_web_math:
+    paths: [/scratch/project_465002530/preprocessed/oellm-v1-256k/open-web-math/open-web-math]
+  swallow_code_2_0:
+    paths: [/scratch/project_465002530/training/collection/flag/swallow-code-2.0/megatron-lm/stage5-auto-format/python/medium/shard_0000_text_document]
+  starcoder:
+    paths: [/scratch/project_465002530/training/collection/flag/starcoder-0.0.0/megatron-lm/shard_0000_text_document]
+  the_stack_v2:
+    paths: [/scratch/project_465002530/training/collection/flag/common-pile-stackv2-0.1/megatron-lm/documents/shard_0000_text_document]
+  the_stackv2_edu:
+    paths: [/scratch/project_465002530/preprocessed/oellm-v1-256k/common-pile/stackv2edu/stackv2_edu]

@@ -3,7 +3,7 @@
 echo "Scanning nested-swarm checkpoints for iter_0022889..."
 
 # Dynamically set the flash path using the $USER variable
-BASE_USER_DIR="/flash/project_462000963/users/$USER"
+BASE_USER_DIR="/flash/project_465002530/users/$USER"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"

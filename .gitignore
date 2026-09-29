@@ -2,5 +2,5 @@ logs/
 scripts/logs/
 __pycache__/
 *.pyc
-data/mixes/
+data/runs/*/mixes/
 fix.patch
