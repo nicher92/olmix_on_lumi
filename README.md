@@ -151,6 +151,8 @@ BPB evaluation needs our fork of oellm-eval:
 
 ```bash
 uv tool install -p 3.12 --force git+https://github.com/nicher92/oellm-eval.git@bpb-metrics
+export HF_HOME=/scratch/project_465002530/cache/huggingface
+oellm-eval schedule --models "<path to model>" --task_groups "bpb-core"
 ```
 
 ## 5. Collect results for the fit
