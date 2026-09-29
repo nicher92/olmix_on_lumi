@@ -12,10 +12,10 @@
 # Run megatron-to-hf.sh with LUMI configuration.
 
 # LUMI project
-PROJECT="project_462000963"
+PROJECT="project_465002530"
 
 # LUMI container
-CONTAINER="/scratch/project_462000963/containers/laif-rocm-6.4.4-pytorch-2.9.1-te-2.4.0-fa-2.8.0-triton-3.2.0.sif"
+CONTAINER="/scratch/project_465002530/containers/laif-rocm-6.4.4-pytorch-2.9.1-te-2.4.0-fa-2.8.0-triton-3.2.0.sif"
 
 # Directories to bind
 BIND_DIRS="/pfs,/scratch,/flash,$(realpath /scratch/$PROJECT),$(realpath /flash/$PROJECT)"
