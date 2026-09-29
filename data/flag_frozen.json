@@ -1,0 +1,23 @@
+{
+  "nemotron_cc_ha": 0.04629611921,
+  "nemotron_cc_mha": 0.01288662777,
+  "dclm_baseline": 0.1131229826,
+  "finepdfs_edu": 0.01142425626,
+  "hplt4_ab": 0.003257753717,
+  "hplt4_cc": 0.07954891916,
+  "hplt4_ia": 0.01460420324,
+  "finephrase": 0.08125730843,
+  "mixture_vitae": 0.1433562087,
+  "nemotron_pretraining_v1": 0.05697535942,
+  "nemotron_pretraining_v1_1": 0.003420513833,
+  "nemotron_mind": 0.01102492673,
+  "agenttrove": 0.006740232035,
+  "finemath_3plus": 0.01312380879,
+  "megamath": 0.106016448,
+  "swallow_math_v2": 0.01168062405,
+  "dolmino_math": 0.007333333333,
+  "swallow_code_2_0": 0.00418102109,
+  "starcoder": 0.02099629959,
+  "the_stack_v2": 0.2440535449,
+  "the_stackv2_edu": 0.006671682256
+}
