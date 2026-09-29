@@ -6,9 +6,12 @@ from datetime import datetime
 import random
 from olmix.aliases import SourceConfig, QualityConfig, TopicConfig
 from olmix.generate.synthesize_mixture import generate_weights_dirichlet
+import sys
+
+CONFIG = sys.argv[1] if len(sys.argv) > 1 else "./configs/config.yaml"
 
 def get_configs():
-    with open("./configs/config_smoke.yaml", "r") as f:
+    with open(CONFIG, "r") as f:
         config = yaml.safe_load(f)
     return config["settings"], config.get("swarm", {}), config["datasets"]
 
@@ -139,7 +142,9 @@ def make_megatron_text_files_and_bash_script(lumi_variants, prefix_map):
                             shard_weight = domain_weight * (tokens / total_actual_tokens)
                             f.write(f"{shard_weight:.6f} {prefix}\n")
 
-    launch_script = f"sbatch --array=0-{len(lumi_variants) - 1} scripts/train-0.05B.sh"
+    run_prefix = lumi_variants[0]["variant_id"].rsplit("-", 1)[0]
+    launch_script = (f"sbatch --array=0-{len(lumi_variants) - 1} "
+                     f"--export=ALL,MIX_PREFIX={run_prefix} scripts/train-0.05B.sh")
     launcher_script = "launch_all_swarms.sh"
     with open(launcher_script, "w") as f:
         f.write("#!/bin/bash\n\n")

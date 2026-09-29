@@ -24,11 +24,11 @@ set -euo pipefail
 
 TASK_ID=${SLURM_ARRAY_TASK_ID:-0}
 TASK_ID_PADDED=$(printf "%04d" $TASK_ID)
-EXP_NAME="stage2_mix_20260629_0957-0000-${TASK_ID_PADDED}"
+MIX_PREFIX=${MIX_PREFIX:?"set MIX_PREFIX (launch_all_swarms.sh does this)"}
+EXP_NAME="${MIX_PREFIX}-${TASK_ID_PADDED}"
 MIX_FILE="data/mixes/${EXP_NAME}.txt"
 
-
-MEGATRON_DIR="/flash/project_462000963/tools/OpenEuroLLM-NVIDIA-Megatron-LM"
+MEGATRON_DIR="/flash/project_465002530/tools/OpenEuroLLM-NVIDIA-Megatron-LM"
 
 # --- Retained Slurm Rescheduling Protections (Array Safe) ---
 timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
@@ -61,7 +61,7 @@ ln -sf "${logfile_basename}.err" "logs/latest_${LOG_ID}.err"
 
 module purge
 
-CONTAINER=/scratch/project_462000963/containers/laif-rocm-6.4.4-pytorch-2.9.1-te-2.4.0-fa-2.8.0-triton-3.2.0.sif
+CONTAINER=/scratch/project_465002530/containers/laif-rocm-6.4.4-pytorch-2.9.1-te-2.4.0-fa-2.8.0-triton-3.2.0.sif
 BIND_DIRS="/pfs,/scratch,/projappl,/project,/flash,/appl,/usr/lib64/libjansson.so.4,/usr/lib64/libcxi.so.1,/opt/cray,/var/spool/slurmd"
 export PYTHONUSERBASE=""
 
@@ -69,7 +69,7 @@ c="fe"
 BIND_MASK="0x${c}000000000000,0x${c}00000000000000,0x${c}0000,0x${c}000000,0x${c},0x${c}00,0x${c}00000000,0x${c}0000000000"
 
 BASE_DIR="$SLURM_SUBMIT_DIR"
-OUTPUT_DIR="/flash/project_462000963/users/$USER/ablation_output/${EXP_NAME}"
+OUTPUT_DIR="/flash/project_465002530/users/$USER/ablation_output/${EXP_NAME}"
 CHECKPOINT_PATH="$OUTPUT_DIR/checkpoints"
 # --- Streamlined Early Exit Block ---
 FINAL_CHECKPOINT_DIR="$CHECKPOINT_PATH/iter_0022889"
@@ -120,7 +120,7 @@ export NVTE_DEBUG_LEVEL=0
 # MODEL AND PRETRAINING CONFIGURATION (30M Olmix Setup)
 # ====================================================================
 DATA_PATH=$(tr "\n" " " < "$MIX_FILE")
-DATA_CACHE_PATH="/scratch/project_462000963/users/$USER/test_output/data_cache_${EXP_NAME}"
+DATA_CACHE_PATH="/scratch/project_465002530/users/$USER/test_output/data_cache_${EXP_NAME}"
 TOKENIZER_MODEL="openeurollm/tokenizer-256k"
 
 # --- 30M Architecture Updates from Table 6 ---
