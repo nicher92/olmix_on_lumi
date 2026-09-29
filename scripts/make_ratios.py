@@ -1,10 +1,17 @@
 import json
 import csv
 import os
+import sys
 
 def main():
-    json_path = 'data/lumi_nested_variants.json'
-    output_csv = 'ratios_big.csv'  # Naming it exactly what your fit_config expects
+    
+    if len(sys.argv) < 2:
+        print("usage: make_ratios.py data/variants/<run_prefix>.json")
+        return
+
+    json_path = sys.argv[1]
+    
+    output_csv = json_path.replace(".json", "_ratios.csv").replace("data/variants/", "data/")
 
     if not os.path.exists(json_path):
         print(f"Error: Could not find {json_path}")

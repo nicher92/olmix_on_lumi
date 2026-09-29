@@ -1,0 +1,839 @@
+[
+  {
+    "variant_id": "stage2_mix_20260929_1153-0000",
+    "mix": {
+      "agenttrove": {
+        "weight": 0.006501,
+        "repetition_factor": 1.0
+      },
+      "dclm_baseline": {
+        "weight": 0.109022,
+        "repetition_factor": 1.0
+      },
+      "dolmino_math": {
+        "weight": 0.007101,
+        "repetition_factor": 1.0
+      },
+      "finemath_3plus": {
+        "weight": 0.012603,
+        "repetition_factor": 1.0
+      },
+      "finepdfs_edu": {
+        "weight": 0.011002,
+        "repetition_factor": 1.0
+      },
+      "finephrase": {
+        "weight": 0.078316,
+        "repetition_factor": 1.0
+      },
+      "hplt4_ab": {
+        "weight": 0.003101,
+        "repetition_factor": 1.0
+      },
+      "hplt4_cc": {
+        "weight": 0.076615,
+        "repetition_factor": 1.0
+      },
+      "hplt4_ia": {
+        "weight": 0.014103,
+        "repetition_factor": 1.0
+      },
+      "megamath": {
+        "weight": 0.10212,
+        "repetition_factor": 1.0
+      },
+      "mixture_vitae": {
+        "weight": 0.138128,
+        "repetition_factor": 1.0
+      },
+      "nemotron_cc_ha": {
+        "weight": 0.044609,
+        "repetition_factor": 1.0
+      },
+      "nemotron_cc_mha": {
+        "weight": 0.012402,
+        "repetition_factor": 1.0
+      },
+      "nemotron_mind": {
+        "weight": 0.010602,
+        "repetition_factor": 1.0
+      },
+      "nemotron_pretraining_v1": {
+        "weight": 0.054911,
+        "repetition_factor": 1.0
+      },
+      "nemotron_pretraining_v1_1": {
+        "weight": 0.003301,
+        "repetition_factor": 1.0
+      },
+      "starcoder": {
+        "weight": 0.020204,
+        "repetition_factor": 1.0
+      },
+      "swallow_code_2_0": {
+        "weight": 0.004001,
+        "repetition_factor": 1.0
+      },
+      "swallow_math_v2": {
+        "weight": 0.011302,
+        "repetition_factor": 1.0
+      },
+      "the_stack_v2": {
+        "weight": 0.235147,
+        "repetition_factor": 1.0
+      },
+      "the_stackv2_edu": {
+        "weight": 0.006401,
+        "repetition_factor": 1.0
+      },
+      "open_web_math": {
+        "weight": 0.038508,
+        "repetition_factor": 1.0
+      }
+    }
+  },
+  {
+    "variant_id": "stage2_mix_20260929_1153-0001",
+    "mix": {
+      "agenttrove": {
+        "weight": 0.006301,
+        "repetition_factor": 1.0
+      },
+      "dclm_baseline": {
+        "weight": 0.106411,
+        "repetition_factor": 1.0
+      },
+      "dolmino_math": {
+        "weight": 0.006901,
+        "repetition_factor": 1.0
+      },
+      "finemath_3plus": {
+        "weight": 0.012301,
+        "repetition_factor": 1.0
+      },
+      "finepdfs_edu": {
+        "weight": 0.010701,
+        "repetition_factor": 1.0
+      },
+      "finephrase": {
+        "weight": 0.076408,
+        "repetition_factor": 1.0
+      },
+      "hplt4_ab": {
+        "weight": 0.0031,
+        "repetition_factor": 1.0
+      },
+      "hplt4_cc": {
+        "weight": 0.074807,
+        "repetition_factor": 1.0
+      },
+      "hplt4_ia": {
+        "weight": 0.013701,
+        "repetition_factor": 1.0
+      },
+      "megamath": {
+        "weight": 0.09971,
+        "repetition_factor": 1.0
+      },
+      "mixture_vitae": {
+        "weight": 0.134813,
+        "repetition_factor": 1.0
+      },
+      "nemotron_cc_ha": {
+        "weight": 0.043504,
+        "repetition_factor": 1.0
+      },
+      "nemotron_cc_mha": {
+        "weight": 0.012101,
+        "repetition_factor": 1.0
+      },
+      "nemotron_mind": {
+        "weight": 0.010401,
+        "repetition_factor": 1.0
+      },
+      "nemotron_pretraining_v1": {
+        "weight": 0.053605,
+        "repetition_factor": 1.0
+      },
+      "nemotron_pretraining_v1_1": {
+        "weight": 0.0032,
+        "repetition_factor": 1.0
+      },
+      "starcoder": {
+        "weight": 0.019702,
+        "repetition_factor": 1.0
+      },
+      "swallow_code_2_0": {
+        "weight": 0.0039,
+        "repetition_factor": 1.0
+      },
+      "swallow_math_v2": {
+        "weight": 0.011001,
+        "repetition_factor": 1.0
+      },
+      "the_stack_v2": {
+        "weight": 0.229523,
+        "repetition_factor": 1.0
+      },
+      "the_stackv2_edu": {
+        "weight": 0.006301,
+        "repetition_factor": 1.0
+      },
+      "open_web_math": {
+        "weight": 0.061606,
+        "repetition_factor": 1.0
+      }
+    }
+  },
+  {
+    "variant_id": "stage2_mix_20260929_1153-0002",
+    "mix": {
+      "agenttrove": {
+        "weight": 0.006499,
+        "repetition_factor": 1.0
+      },
+      "dclm_baseline": {
+        "weight": 0.109689,
+        "repetition_factor": 1.0
+      },
+      "dolmino_math": {
+        "weight": 0.007099,
+        "repetition_factor": 1.0
+      },
+      "finemath_3plus": {
+        "weight": 0.012699,
+        "repetition_factor": 1.0
+      },
+      "finepdfs_edu": {
+        "weight": 0.011099,
+        "repetition_factor": 1.0
+      },
+      "finephrase": {
+        "weight": 0.078792,
+        "repetition_factor": 1.0
+      },
+      "hplt4_ab": {
+        "weight": 0.0032,
+        "repetition_factor": 1.0
+      },
+      "hplt4_cc": {
+        "weight": 0.077092,
+        "repetition_factor": 1.0
+      },
+      "hplt4_ia": {
+        "weight": 0.014199,
+        "repetition_factor": 1.0
+      },
+      "megamath": {
+        "weight": 0.10279,
+        "repetition_factor": 1.0
+      },
+      "mixture_vitae": {
+        "weight": 0.138986,
+        "repetition_factor": 1.0
+      },
+      "nemotron_cc_ha": {
+        "weight": 0.044896,
+        "repetition_factor": 1.0
+      },
+      "nemotron_cc_mha": {
+        "weight": 0.012499,
+        "repetition_factor": 1.0
+      },
+      "nemotron_mind": {
+        "weight": 0.010699,
+        "repetition_factor": 1.0
+      },
+      "nemotron_pretraining_v1": {
+        "weight": 0.055294,
+        "repetition_factor": 1.0
+      },
+      "nemotron_pretraining_v1_1": {
+        "weight": 0.0033,
+        "repetition_factor": 1.0
+      },
+      "starcoder": {
+        "weight": 0.020398,
+        "repetition_factor": 1.0
+      },
+      "swallow_code_2_0": {
+        "weight": 0.0041,
+        "repetition_factor": 1.0
+      },
+      "swallow_math_v2": {
+        "weight": 0.011299,
+        "repetition_factor": 1.0
+      },
+      "the_stack_v2": {
+        "weight": 0.236676,
+        "repetition_factor": 1.0
+      },
+      "the_stackv2_edu": {
+        "weight": 0.006499,
+        "repetition_factor": 1.0
+      },
+      "open_web_math": {
+        "weight": 0.032197,
+        "repetition_factor": 1.0
+      }
+    }
+  },
+  {
+    "variant_id": "stage2_mix_20260929_1153-0003",
+    "mix": {
+      "agenttrove": {
+        "weight": 0.0067,
+        "repetition_factor": 1.0
+      },
+      "dclm_baseline": {
+        "weight": 0.1128,
+        "repetition_factor": 1.0
+      },
+      "dolmino_math": {
+        "weight": 0.0073,
+        "repetition_factor": 1.0
+      },
+      "finemath_3plus": {
+        "weight": 0.0131,
+        "repetition_factor": 1.0
+      },
+      "finepdfs_edu": {
+        "weight": 0.0114,
+        "repetition_factor": 1.0
+      },
+      "finephrase": {
+        "weight": 0.081,
+        "repetition_factor": 1.0
+      },
+      "hplt4_ab": {
+        "weight": 0.0032,
+        "repetition_factor": 1.0
+      },
+      "hplt4_cc": {
+        "weight": 0.0793,
+        "repetition_factor": 1.0
+      },
+      "hplt4_ia": {
+        "weight": 0.0146,
+        "repetition_factor": 1.0
+      },
+      "megamath": {
+        "weight": 0.1057,
+        "repetition_factor": 1.0
+      },
+      "mixture_vitae": {
+        "weight": 0.143,
+        "repetition_factor": 1.0
+      },
+      "nemotron_cc_ha": {
+        "weight": 0.0462,
+        "repetition_factor": 1.0
+      },
+      "nemotron_cc_mha": {
+        "weight": 0.0129,
+        "repetition_factor": 1.0
+      },
+      "nemotron_mind": {
+        "weight": 0.011,
+        "repetition_factor": 1.0
+      },
+      "nemotron_pretraining_v1": {
+        "weight": 0.0568,
+        "repetition_factor": 1.0
+      },
+      "nemotron_pretraining_v1_1": {
+        "weight": 0.0034,
+        "repetition_factor": 1.0
+      },
+      "starcoder": {
+        "weight": 0.0209,
+        "repetition_factor": 1.0
+      },
+      "swallow_code_2_0": {
+        "weight": 0.0042,
+        "repetition_factor": 1.0
+      },
+      "swallow_math_v2": {
+        "weight": 0.0116,
+        "repetition_factor": 1.0
+      },
+      "the_stack_v2": {
+        "weight": 0.2434,
+        "repetition_factor": 1.0
+      },
+      "the_stackv2_edu": {
+        "weight": 0.0067,
+        "repetition_factor": 1.0
+      },
+      "open_web_math": {
+        "weight": 0.0048,
+        "repetition_factor": 1.0
+      }
+    }
+  },
+  {
+    "variant_id": "stage2_mix_20260929_1153-0004",
+    "mix": {
+      "agenttrove": {
+        "weight": 0.0067,
+        "repetition_factor": 1.0
+      },
+      "dclm_baseline": {
+        "weight": 0.1131,
+        "repetition_factor": 1.0
+      },
+      "dolmino_math": {
+        "weight": 0.0073,
+        "repetition_factor": 1.0
+      },
+      "finemath_3plus": {
+        "weight": 0.0131,
+        "repetition_factor": 1.0
+      },
+      "finepdfs_edu": {
+        "weight": 0.0114,
+        "repetition_factor": 1.0
+      },
+      "finephrase": {
+        "weight": 0.0812,
+        "repetition_factor": 1.0
+      },
+      "hplt4_ab": {
+        "weight": 0.0033,
+        "repetition_factor": 1.0
+      },
+      "hplt4_cc": {
+        "weight": 0.0795,
+        "repetition_factor": 1.0
+      },
+      "hplt4_ia": {
+        "weight": 0.0146,
+        "repetition_factor": 1.0
+      },
+      "megamath": {
+        "weight": 0.106,
+        "repetition_factor": 1.0
+      },
+      "mixture_vitae": {
+        "weight": 0.1433,
+        "repetition_factor": 1.0
+      },
+      "nemotron_cc_ha": {
+        "weight": 0.0463,
+        "repetition_factor": 1.0
+      },
+      "nemotron_cc_mha": {
+        "weight": 0.0129,
+        "repetition_factor": 1.0
+      },
+      "nemotron_mind": {
+        "weight": 0.011,
+        "repetition_factor": 1.0
+      },
+      "nemotron_pretraining_v1": {
+        "weight": 0.0569,
+        "repetition_factor": 1.0
+      },
+      "nemotron_pretraining_v1_1": {
+        "weight": 0.0034,
+        "repetition_factor": 1.0
+      },
+      "starcoder": {
+        "weight": 0.021,
+        "repetition_factor": 1.0
+      },
+      "swallow_code_2_0": {
+        "weight": 0.0042,
+        "repetition_factor": 1.0
+      },
+      "swallow_math_v2": {
+        "weight": 0.0117,
+        "repetition_factor": 1.0
+      },
+      "the_stack_v2": {
+        "weight": 0.2439,
+        "repetition_factor": 1.0
+      },
+      "the_stackv2_edu": {
+        "weight": 0.0067,
+        "repetition_factor": 1.0
+      },
+      "open_web_math": {
+        "weight": 0.0025,
+        "repetition_factor": 1.0
+      }
+    }
+  },
+  {
+    "variant_id": "stage2_mix_20260929_1153-0005",
+    "mix": {
+      "agenttrove": {
+        "weight": 0.005701,
+        "repetition_factor": 1.0
+      },
+      "dclm_baseline": {
+        "weight": 0.09641,
+        "repetition_factor": 1.0
+      },
+      "dolmino_math": {
+        "weight": 0.006201,
+        "repetition_factor": 1.0
+      },
+      "finemath_3plus": {
+        "weight": 0.011201,
+        "repetition_factor": 1.0
+      },
+      "finepdfs_edu": {
+        "weight": 0.009701,
+        "repetition_factor": 1.0
+      },
+      "finephrase": {
+        "weight": 0.069207,
+        "repetition_factor": 1.0
+      },
+      "hplt4_ab": {
+        "weight": 0.0028,
+        "repetition_factor": 1.0
+      },
+      "hplt4_cc": {
+        "weight": 0.067807,
+        "repetition_factor": 1.0
+      },
+      "hplt4_ia": {
+        "weight": 0.012401,
+        "repetition_factor": 1.0
+      },
+      "megamath": {
+        "weight": 0.090309,
+        "repetition_factor": 1.0
+      },
+      "mixture_vitae": {
+        "weight": 0.122212,
+        "repetition_factor": 1.0
+      },
+      "nemotron_cc_ha": {
+        "weight": 0.039404,
+        "repetition_factor": 1.0
+      },
+      "nemotron_cc_mha": {
+        "weight": 0.011001,
+        "repetition_factor": 1.0
+      },
+      "nemotron_mind": {
+        "weight": 0.009401,
+        "repetition_factor": 1.0
+      },
+      "nemotron_pretraining_v1": {
+        "weight": 0.048505,
+        "repetition_factor": 1.0
+      },
+      "nemotron_pretraining_v1_1": {
+        "weight": 0.0029,
+        "repetition_factor": 1.0
+      },
+      "starcoder": {
+        "weight": 0.017902,
+        "repetition_factor": 1.0
+      },
+      "swallow_code_2_0": {
+        "weight": 0.0036,
+        "repetition_factor": 1.0
+      },
+      "swallow_math_v2": {
+        "weight": 0.010001,
+        "repetition_factor": 1.0
+      },
+      "the_stack_v2": {
+        "weight": 0.208021,
+        "repetition_factor": 1.0
+      },
+      "the_stackv2_edu": {
+        "weight": 0.005701,
+        "repetition_factor": 1.0
+      },
+      "open_web_math": {
+        "weight": 0.149615,
+        "repetition_factor": 1.0
+      }
+    }
+  },
+  {
+    "variant_id": "stage2_mix_20260929_1153-0006",
+    "mix": {
+      "agenttrove": {
+        "weight": 0.006101,
+        "repetition_factor": 1.0
+      },
+      "dclm_baseline": {
+        "weight": 0.10251,
+        "repetition_factor": 1.0
+      },
+      "dolmino_math": {
+        "weight": 0.006601,
+        "repetition_factor": 1.0
+      },
+      "finemath_3plus": {
+        "weight": 0.011901,
+        "repetition_factor": 1.0
+      },
+      "finepdfs_edu": {
+        "weight": 0.010401,
+        "repetition_factor": 1.0
+      },
+      "finephrase": {
+        "weight": 0.073707,
+        "repetition_factor": 1.0
+      },
+      "hplt4_ab": {
+        "weight": 0.003,
+        "repetition_factor": 1.0
+      },
+      "hplt4_cc": {
+        "weight": 0.072107,
+        "repetition_factor": 1.0
+      },
+      "hplt4_ia": {
+        "weight": 0.013201,
+        "repetition_factor": 1.0
+      },
+      "megamath": {
+        "weight": 0.09611,
+        "repetition_factor": 1.0
+      },
+      "mixture_vitae": {
+        "weight": 0.130013,
+        "repetition_factor": 1.0
+      },
+      "nemotron_cc_ha": {
+        "weight": 0.042004,
+        "repetition_factor": 1.0
+      },
+      "nemotron_cc_mha": {
+        "weight": 0.011701,
+        "repetition_factor": 1.0
+      },
+      "nemotron_mind": {
+        "weight": 0.010001,
+        "repetition_factor": 1.0
+      },
+      "nemotron_pretraining_v1": {
+        "weight": 0.051605,
+        "repetition_factor": 1.0
+      },
+      "nemotron_pretraining_v1_1": {
+        "weight": 0.0031,
+        "repetition_factor": 1.0
+      },
+      "starcoder": {
+        "weight": 0.019002,
+        "repetition_factor": 1.0
+      },
+      "swallow_code_2_0": {
+        "weight": 0.0038,
+        "repetition_factor": 1.0
+      },
+      "swallow_math_v2": {
+        "weight": 0.010601,
+        "repetition_factor": 1.0
+      },
+      "the_stack_v2": {
+        "weight": 0.221222,
+        "repetition_factor": 1.0
+      },
+      "the_stackv2_edu": {
+        "weight": 0.006001,
+        "repetition_factor": 1.0
+      },
+      "open_web_math": {
+        "weight": 0.09531,
+        "repetition_factor": 1.0
+      }
+    }
+  },
+  {
+    "variant_id": "stage2_mix_20260929_1153-0007",
+    "mix": {
+      "agenttrove": {
+        "weight": 0.0058,
+        "repetition_factor": 1.0
+      },
+      "dclm_baseline": {
+        "weight": 0.0974,
+        "repetition_factor": 1.0
+      },
+      "dolmino_math": {
+        "weight": 0.0063,
+        "repetition_factor": 1.0
+      },
+      "finemath_3plus": {
+        "weight": 0.0113,
+        "repetition_factor": 1.0
+      },
+      "finepdfs_edu": {
+        "weight": 0.0098,
+        "repetition_factor": 1.0
+      },
+      "finephrase": {
+        "weight": 0.0699,
+        "repetition_factor": 1.0
+      },
+      "hplt4_ab": {
+        "weight": 0.0028,
+        "repetition_factor": 1.0
+      },
+      "hplt4_cc": {
+        "weight": 0.0685,
+        "repetition_factor": 1.0
+      },
+      "hplt4_ia": {
+        "weight": 0.0126,
+        "repetition_factor": 1.0
+      },
+      "megamath": {
+        "weight": 0.0913,
+        "repetition_factor": 1.0
+      },
+      "mixture_vitae": {
+        "weight": 0.1234,
+        "repetition_factor": 1.0
+      },
+      "nemotron_cc_ha": {
+        "weight": 0.0398,
+        "repetition_factor": 1.0
+      },
+      "nemotron_cc_mha": {
+        "weight": 0.0111,
+        "repetition_factor": 1.0
+      },
+      "nemotron_mind": {
+        "weight": 0.0095,
+        "repetition_factor": 1.0
+      },
+      "nemotron_pretraining_v1": {
+        "weight": 0.049,
+        "repetition_factor": 1.0
+      },
+      "nemotron_pretraining_v1_1": {
+        "weight": 0.0029,
+        "repetition_factor": 1.0
+      },
+      "starcoder": {
+        "weight": 0.0181,
+        "repetition_factor": 1.0
+      },
+      "swallow_code_2_0": {
+        "weight": 0.0036,
+        "repetition_factor": 1.0
+      },
+      "swallow_math_v2": {
+        "weight": 0.0101,
+        "repetition_factor": 1.0
+      },
+      "the_stack_v2": {
+        "weight": 0.2101,
+        "repetition_factor": 1.0
+      },
+      "the_stackv2_edu": {
+        "weight": 0.0057,
+        "repetition_factor": 1.0
+      },
+      "open_web_math": {
+        "weight": 0.141,
+        "repetition_factor": 1.0
+      }
+    }
+  },
+  {
+    "variant_id": "stage2_mix_20260929_1153-0008",
+    "mix": {
+      "agenttrove": {
+        "weight": 0.006399,
+        "repetition_factor": 1.0
+      },
+      "dclm_baseline": {
+        "weight": 0.107789,
+        "repetition_factor": 1.0
+      },
+      "dolmino_math": {
+        "weight": 0.006999,
+        "repetition_factor": 1.0
+      },
+      "finemath_3plus": {
+        "weight": 0.012499,
+        "repetition_factor": 1.0
+      },
+      "finepdfs_edu": {
+        "weight": 0.010899,
+        "repetition_factor": 1.0
+      },
+      "finephrase": {
+        "weight": 0.077392,
+        "repetition_factor": 1.0
+      },
+      "hplt4_ab": {
+        "weight": 0.0031,
+        "repetition_factor": 1.0
+      },
+      "hplt4_cc": {
+        "weight": 0.075792,
+        "repetition_factor": 1.0
+      },
+      "hplt4_ia": {
+        "weight": 0.013899,
+        "repetition_factor": 1.0
+      },
+      "megamath": {
+        "weight": 0.10099,
+        "repetition_factor": 1.0
+      },
+      "mixture_vitae": {
+        "weight": 0.136586,
+        "repetition_factor": 1.0
+      },
+      "nemotron_cc_ha": {
+        "weight": 0.044096,
+        "repetition_factor": 1.0
+      },
+      "nemotron_cc_mha": {
+        "weight": 0.012299,
+        "repetition_factor": 1.0
+      },
+      "nemotron_mind": {
+        "weight": 0.010499,
+        "repetition_factor": 1.0
+      },
+      "nemotron_pretraining_v1": {
+        "weight": 0.054295,
+        "repetition_factor": 1.0
+      },
+      "nemotron_pretraining_v1_1": {
+        "weight": 0.0033,
+        "repetition_factor": 1.0
+      },
+      "starcoder": {
+        "weight": 0.019998,
+        "repetition_factor": 1.0
+      },
+      "swallow_code_2_0": {
+        "weight": 0.004,
+        "repetition_factor": 1.0
+      },
+      "swallow_math_v2": {
+        "weight": 0.011099,
+        "repetition_factor": 1.0
+      },
+      "the_stack_v2": {
+        "weight": 0.232477,
+        "repetition_factor": 1.0
+      },
+      "the_stackv2_edu": {
+        "weight": 0.006399,
+        "repetition_factor": 1.0
+      },
+      "open_web_math": {
+        "weight": 0.049195,
+        "repetition_factor": 1.0
+      }
+    }
+  }
+]

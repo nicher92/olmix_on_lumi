@@ -7,11 +7,13 @@ import random
 from olmix.aliases import SourceConfig, QualityConfig, TopicConfig
 from olmix.generate.synthesize_mixture import generate_weights_dirichlet
 import sys
+import shutil
+
 
 CONFIG = sys.argv[1] if len(sys.argv) > 1 else "./configs/config.yaml"
 
-def get_configs():
-    with open(CONFIG, "r") as f:
+def get_configs(config):
+    with open(config, "r") as f:
         config = yaml.safe_load(f)
     return config["settings"], config.get("swarm", {}), config["datasets"]
 
@@ -98,12 +100,9 @@ def calculate_priors_and_variants(leaf_tokens, sources):
     return domains, leaf_dist, leaf_tokens, total_tokens
 
 
-def write_mixes_to_json(mixtures, domains):
+def write_mixes_to_json(mixtures, domains, run_prefix, run_dir):
     lumi_variants = []
-
-    # Create a unique prefix using the current date and time
-    run_prefix = datetime.now().strftime("stage2_mix_%Y%m%d_%H%M")
-
+    
     for idx, mix in enumerate(mixtures):
         variant_config = {}
         for i, leaf_name in enumerate(domains):
@@ -116,19 +115,19 @@ def write_mixes_to_json(mixtures, domains):
             "mix": variant_config
         })
 
-    os.makedirs("./data", exist_ok=True)
-    with open("./data/lumi_nested_variants.json", "w") as f:
+    
+    with open(f"{run_dir}/variants.json", "w") as f:
         json.dump(lumi_variants, f, indent=2)
-
+    
+    print(f"Wrote {run_dir}/variants.json")
     return lumi_variants
 
 
-def make_megatron_text_files_and_bash_script(lumi_variants, prefix_map):
-    os.makedirs("./data/mixes", exist_ok=True)
+def make_megatron_text_files_and_bash_script(lumi_variants, prefix_map, run_prefix, run_dir):
 
     for variant in lumi_variants:
         variant_id = variant["variant_id"]
-        mix_file_path = f"./data/mixes/{variant_id}.txt"
+        mix_file_path = f"{run_dir}/mixes/{variant_id}.txt"
 
         with open(mix_file_path, "w") as f:
             for domain, config in variant["mix"].items():
@@ -142,7 +141,6 @@ def make_megatron_text_files_and_bash_script(lumi_variants, prefix_map):
                             shard_weight = domain_weight * (tokens / total_actual_tokens)
                             f.write(f"{shard_weight:.6f} {prefix}\n")
 
-    run_prefix = lumi_variants[0]["variant_id"].rsplit("-", 1)[0]
     launch_script = (f"sbatch --array=0-{len(lumi_variants) - 1} "
                      f"--export=ALL,MIX_PREFIX={run_prefix} scripts/train-0.05B.sh")
     launcher_script = "launch_all_swarms.sh"
@@ -154,19 +152,19 @@ def make_megatron_text_files_and_bash_script(lumi_variants, prefix_map):
     return launcher_script
 
 if __name__ == "__main__":
-    settings, swarm_config, datasets_config = get_configs()
+    settings, swarm_config, datasets_config = get_configs(CONFIG)
     leaf_tokens, sources, prefix_map = parse_yaml(datasets_config)
     domains, leaf_dist, _, total_tokens = calculate_priors_and_variants(leaf_tokens, sources)
 
     existing_mix_path = swarm_config.get("existing_mix_file")
-    
+
+
     # Defaults for standard run
     target_sources = sources
     target_leaf_dist = leaf_dist
     target_leaf_tokens = leaf_tokens
     effective_leaves = len(domains)
     frozen_domains = []
-    frozen_ratios = {}
     collapsed_domains = domains
 
     if existing_mix_path and os.path.exists(existing_mix_path):
@@ -229,13 +227,18 @@ if __name__ == "__main__":
         manual_topic_prior=swarm_config.get("manual_topic_prior", None)
     )
 
-    # UNPACK the Virtual Domain back into the 27 original domains
     leaf_to_domain = {f"existing:{d}": d for d in frozen_domains}
     out_domains = [leaf_to_domain.get(leaf, leaf) for leaf in collapsed_domains]
     unpacked_mixtures = [(np.array([np.asarray(m[0]).flatten()]),
                           np.array([np.asarray(m[1]).flatten()])) for m in raw_mixtures]
-    lumi_variants = write_mixes_to_json(unpacked_mixtures, out_domains)
-    launcher_script = make_megatron_text_files_and_bash_script(lumi_variants, prefix_map)
+    
+    run_prefix = datetime.now().strftime("stage2_mix_%Y%m%d_%H%M")
+    run_dir = f"./data/runs/{run_prefix}"
+    os.makedirs(f"{run_dir}/mixes", exist_ok=False)
+    shutil.copyfile(CONFIG, f"{run_dir}/config.yaml")
+
+    lumi_variants = write_mixes_to_json(unpacked_mixtures, out_domains, run_prefix, run_dir)
+    launcher_script = make_megatron_text_files_and_bash_script(lumi_variants, prefix_map, run_prefix, run_dir)
 
     print(f"✅ Generated {NUM_VARIANTS} Megatron mix files in the mixes/ directory.")
     print(f"✅ Generated {launcher_script}. Run it with: ./{launcher_script}")
