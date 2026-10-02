@@ -9,20 +9,19 @@
 #SBATCH --output=logs/megatron-to-hf-%j.out
 #SBATCH --error=logs/megatron-to-hf-%j.err
 
-# Run megatron-to-hf.sh with LUMI configuration.
+# Run from the repository root: ./scripts/megatron-to-hf-lumi.sh
 
-# LUMI project
-PROJECT="project_465002530"
+source env.sh
 
 # LUMI container
-CONTAINER="/scratch/project_465002530/containers/laif-rocm-6.4.4-pytorch-2.9.1-te-2.4.0-fa-2.8.0-triton-3.2.0.sif"
+CONTAINER="/scratch/${PROJECT_ALLOCATION}/containers/laif-rocm-6.4.4-pytorch-2.9.1-te-2.4.0-fa-2.8.0-triton-3.2.0.sif"
 
 # Directories to bind
-BIND_DIRS="/pfs,/scratch,/flash,$(realpath /scratch/$PROJECT),$(realpath /flash/$PROJECT)"
+BIND_DIRS="/pfs,/scratch,/flash,$(realpath /scratch/${PROJECT_ALLOCATION}),$(realpath /flash/${PROJECT_ALLOCATION})"
 
 # Paths to Megatron-Bridge-LUMI and Megatron-Bridge-utils repos
-BRIDGE_PATH="/flash/$PROJECT/tools/Megatron-Bridge-LUMI"
-UTILS_PATH="/flash/$PROJECT/tools/Megatron-Bridge-utils"
+BRIDGE_PATH="/flash/${PROJECT_ALLOCATION}/tools/Megatron-Bridge-LUMI"
+UTILS_PATH="/flash/${PROJECT_ALLOCATION}/tools/Megatron-Bridge-utils"
 
 if [[ $# -ne 4 ]]; then
     echo "Usage: $0 INPUT_PATH OUTPUT_PATH HF_MODEL TOKENIZER" >&2
@@ -38,4 +37,4 @@ fi
 singularity exec \
     --bind "$BIND_DIRS" \
     "$CONTAINER" \
-    "${SLURM_SUBMIT_DIR}/megatron-to-hf.sh" "$@" "$UTILS_PATH" "$BRIDGE_PATH"
+    "${SLURM_SUBMIT_DIR}/scripts/megatron-to-hf.sh" "$@" "$UTILS_PATH" "$BRIDGE_PATH"
