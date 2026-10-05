@@ -1,9 +1,12 @@
 import yaml
 from generate_variants import get_configs, parse_yaml
+import sys
 
 def main():
-    # 1. Load the configs using your existing function
-    _, _, datasets_config = get_configs()
+    
+    config_path = sys.argv[1] if len(sys.argv) > 1 else "./configs/config.yaml"
+    _, _, datasets_config = get_configs(config_path)
+    
     
     # 2. Calculate the tokens using your existing function
     leaf_tokens, _, _ = parse_yaml(datasets_config)
