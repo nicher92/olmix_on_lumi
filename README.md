@@ -16,7 +16,7 @@ configs/<experiment>.yaml
   └─ convert_olmix_models_to_hf.sh
   └─ eval_bpb.sh           ─>  BPB scores
   └─ collect_bpb.py        ─>  ratios.csv + metrics.csv
-  └─ olmix fit             ─>  suggested mixture   (run outside this repo)
+  └─ olmix fit             ─>  suggested mixture
 ```
 
 ## Before you start
@@ -143,8 +143,6 @@ iteration number changes with it.
 
 ```bash
 ./scripts/convert_olmix_models_to_hf.sh
-export HF_HOME=/scratch/project_465002530/cache/huggingface
-./scripts/eval_bpb.sh <hf-checkpoint-dir> [...]
 ```
 
 BPB evaluation needs our fork of oellm-eval:
@@ -154,6 +152,9 @@ uv tool install -p 3.12 --force git+https://github.com/nicher92/oellm-eval.git@b
 export HF_HOME=/scratch/project_465002530/cache/huggingface
 oellm-eval schedule --models "<path to model>" --task_groups "bpb-core"
 ```
+
+`./scripts/eval_bpb.sh <hf-dir> [...]` wraps that call: it checks each path holds
+a model before scheduling, and takes `TASK_GROUPS=bpb-all` to include MMLU STEM.
 
 ## 5. Collect results for the fit
 
@@ -165,8 +166,45 @@ python scripts/collect_bpb.py \
 ```
 
 Writes `ratios.csv` (mixture weights) and `metrics.csv` (BPB scores), which is
-what `olmix fit` consumes. `scripts/extract_priors.py` prints the priors block
-for the fit config.
+what `olmix fit` consumes.
+
+## 6. Fit the regression
+
+The fit needs a config of its own. Copy `configs/fit_example.yaml` and set the
+two CSV paths, then paste in a priors block:
+
+```bash
+$OLMIX_PYTHON scripts/extract_priors.py configs/<experiment>.yaml
+```
+
+Check its output lists every dataset in `ratios.csv`: datasets whose `.bin`
+files are missing are dropped with only a warning, and a prior missing for a
+column that varied makes the fit meaningless.
+
+```bash
+$OLMIX_PYTHON -m olmix fit --config configs/<fit>.yaml --output-dir data/runs/<run>/fit
+```
+
+Two settings worth knowing:
+
+- `regression.aggregate_task_families` must be `false` unless you also supply an
+  eval config defining the families; otherwise the run stops with an error.
+- `constraints.enabled: true` caps each weight by its token budget
+  (`weight x target_tokens <= tokens x repetition_factor`). Set `target_tokens`
+  to the size of the real run you are choosing a mixture for, not the proxy's.
+
+### Reading the result for a reuse swarm
+
+Only the datasets you left *out* of the frozen file carry information. Everything
+inside the frozen block moves in fixed proportion across every variant, so the
+regression cannot tell which member caused a change — their individual weights in
+the output come from the KL term pulling toward the prior, not from evidence.
+Read the varied datasets and the block total; treat the rest as unchanged.
+
+This also sets the size of an experiment: one unfrozen dataset answers one
+question. To compare several candidates, unfreeze them all so they vary
+independently, and expect to need more variants (olmix used 16 for a two-source
+round, 64 for six).
 
 ## Layout
 
@@ -196,6 +234,9 @@ so the fit describes what was trained, but the exploration was not as intended.
 ## TODO
 
 - `configs/config.yaml` points at a project we no longer have access to
-- `convert_olmix_models_to_hf.sh` hardcodes `nested-swarm` and `iter_0022889`
-- Machine paths are repeated across the shell scripts; move them to `env.sh`
-- Test the fit step end to end from `metrics.csv` / `ratios.csv`
+- `iter_0022889` is hardcoded in `train-0.05B.sh` and `convert_olmix_models_to_hf.sh`;
+  it is only correct for `TRAIN_TOKENS=3000000000`. Derive it from `TRAIN_ITERS`,
+  or read `latest_checkpointed_iteration.txt` from the checkpoint directory
+- `eval_bpb.sh` and `generate_mixes.sh` do not yet source `env.sh`
+- `extract_priors.py` drops datasets whose `.bin` files are missing, with only a warning
+- `make_ratios.py` duplicates what `collect_bpb.py` already does

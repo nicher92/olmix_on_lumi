@@ -1,0 +1,74 @@
+swarm:
+  ratios: /tmp/fit_test/ratios.csv
+  metrics: /tmp/fit_test/metrics.csv
+
+priors:
+  relative_sizes:
+    dolmino_math: 0.00887
+    open_web_math: 0.00550
+    the_stackv2_edu: 0.03195
+    agenttrove: 0.00844149530311968
+    dclm_baseline: 0.16211124640244703
+    finemath_3plus: 0.016442699431469428
+    finepdfs_edu: 0.04015864075390288
+    finephrase: 0.05083216912773308
+    hplt4_ab: 0.016330019603852948
+    hplt4_cc: 0.03797098902818493
+    hplt4_ia: 0.037969615298712275
+    megamath: 0.132913545413784
+    mixture_vitae: 0.17978971883904643
+    nemotron_cc_ha: 0.02379561171849456
+    nemotron_cc_mha: 0.021598413448820797
+    nemotron_mind: 0.043545320832215066
+    nemotron_pretraining_v1: 0.039321024894801944
+    nemotron_pretraining_v1_1: 0.004267530141585638
+    starcoder: 0.04712006199896359
+    swallow_code_2_0: 0.020951641960325337
+    swallow_math_v2: 0.014637420926238705
+    the_stack_v2: 0.10180283487630169
+  token_counts:
+    dolmino_math: 22280000000
+    open_web_math: 13810000000
+    the_stackv2_edu: 80270000000
+    agenttrove: 20223832911
+    dclm_baseline: 388380333402
+    finemath_3plus: 39392831953
+    finepdfs_edu: 96210637023
+    finephrase: 121781895035
+    hplt4_ab: 39122877647
+    hplt4_cc: 90969539163
+    hplt4_ia: 90966248031
+    megamath: 318429524336
+    mixture_vitae: 430733786178
+    nemotron_cc_ha: 57008676559
+    nemotron_cc_mha: 51744707430
+    nemotron_mind: 104324324180
+    nemotron_pretraining_v1: 94203906868
+    nemotron_pretraining_v1_1: 10223996274
+    starcoder: 112888561375
+    swallow_code_2_0: 50195195401
+    swallow_math_v2: 35067810196
+    the_stack_v2: 243895595327
+
+regression:
+  type: log_linear
+  seed: 0
+  n_test: 0
+  train_split: 1.0
+  aggregate_task_families: false
+
+proposer:
+  type: exact
+  temperature: null
+  kl_reg: 0.1
+  fit_only: false
+  make_worst_mix: false
+
+constraints:
+  enabled: false
+  target_tokens: null
+  repetition_factor: 5.0
+
+filtering:
+  drop_metrics: []
+  obj_weights: {}

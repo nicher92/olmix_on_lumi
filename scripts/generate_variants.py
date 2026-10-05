@@ -10,8 +10,6 @@ import sys
 import shutil
 
 
-CONFIG = sys.argv[1] if len(sys.argv) > 1 else "./configs/config.yaml"
-
 def get_configs(config):
     with open(config, "r") as f:
         config = yaml.safe_load(f)
@@ -152,6 +150,7 @@ def make_megatron_text_files_and_bash_script(lumi_variants, prefix_map, run_pref
     return launcher_script
 
 if __name__ == "__main__":
+    CONFIG = sys.argv[1] if len(sys.argv) > 1 else "./configs/config.yaml"
     settings, swarm_config, datasets_config = get_configs(CONFIG)
     leaf_tokens, sources, prefix_map = parse_yaml(datasets_config)
     domains, leaf_dist, _, total_tokens = calculate_priors_and_variants(leaf_tokens, sources)
