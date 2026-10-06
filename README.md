@@ -28,11 +28,16 @@ export WANDB_API_KEY=""
 export HF_TOKEN=""
 ```
 
-Mixture generation needs olmix installed. We use a venv outside the repo:
+Mixture generation, result collection and the fit all run from a python environment with olmix in it. requirements.txt is a freeze of a working one:
 
-```bash
-export OLMIX_PYTHON=/scratch/project_465002530/users/niclhert/olmix_tool/olmix/.venv/bin/python
-```
+bash
+export UV_CACHE_DIR=/scratch/project_465002530/users/$USER/uv-cache   # home quota is small
+uv venv /scratch/project_465002530/users/$USER/olmix-venv
+uv pip install --no-deps --python /scratch/project_465002530/users/$USER/olmix-venv/bin/python \
+    -r requirements.txt
+export OLMIX_PYTHON=/scratch/project_465002530/users/$USER/olmix-venv/bin/python
+
+--no-deps is required: olmix pins ai2-olmo-core to a branch that no longer exists upstream, so a normal install fails. Everything it needs is listed in requirements.txt already, resolved from main.
 
 Preprocessed training data lives under
 `/scratch/project_465002530/preprocessed/oellm-v1-256k/catalogue/`.
@@ -232,7 +237,12 @@ applied to a different dataset. Its mixes and variants file agree with each othe
 so the fit describes what was trained, but the exploration was not as intended.
 
 ## TODO
-
+- Create separate test for config, checking paths, linting etc
+- Create unit tests for all functions
+- Underscores under functions that are not used outside of the file
+- Split code into smaller, modular parts, ie translate code to what it does, shorten main functions
+- Add ruff linter and pre-commit hooks
+- Join all steps after creation of mixes into one slurm file to run huggingface model conversion, evaluation and regression mix (using slurm --dependency after ok) 
 - `configs/config.yaml` points at a project we no longer have access to
 - `iter_0022889` is hardcoded in `train-0.05B.sh` and `convert_olmix_models_to_hf.sh`;
   it is only correct for `TRAIN_TOKENS=3000000000`. Derive it from `TRAIN_ITERS`,
