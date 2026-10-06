@@ -139,11 +139,17 @@ def test_manual_prior_names_are_sources_or_existing(config):
     allowed = set(cfg["datasets"]) | {"existing"}  # manual_prior takes sources, not leaves
     assert not set(prior) - allowed, f"unknown names: {sorted(set(prior) - allowed)}"
 
-
 @pytest.mark.data
 def test_every_bin_file_exists(config):
     """Only meaningful on LUMI with the data mounted: run with -m data."""
     datasets = yaml.safe_load(config.read_text())["datasets"]
-    missing = [f"{p}.bin" for spec in datasets.values() for p in prefixes_of(spec)
-               if not Path(f"{p}.bin").is_file()]
-    assert not missing, f"{len(missing)} missing .bin file(s), e.g. {missing[0]}"
+    missing = []
+    for spec in datasets.values():
+        for prefix in prefixes_of(spec):
+            path = Path(f"{prefix}.bin")
+            try:
+                if not path.is_file():
+                    missing.append(str(path))
+            except OSError as e:
+                missing.append(f"{path} ({e.strerror})")
+    assert not missing, f"{len(missing)} unusable .bin file(s), e.g. {missing[0]}"
