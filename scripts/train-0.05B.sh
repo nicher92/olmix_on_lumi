@@ -8,8 +8,8 @@
 #SBATCH --cpus-per-task=7       # 7 CPUs assigned per task
 #SBATCH --mem=120G              # Total memory for the job (or you can use --mem-per-gpu=60G)
 
-#SBATCH --time=22:00:00               
-#SBATCH --account=465002530
+#SBATCH --time=4:00:00
+#SBATCH --account=project_465002530
 #SBATCH --output logs/%A_%a.out
 #SBATCH --error logs/%A_%a.err
 
@@ -163,7 +163,7 @@ FSDP=0
 GLOBAL_BATCH_SIZE=64         
 MICRO_BATCH_SIZE=8
 RECOMPUTATION=0
-TRAIN_TOKENS=3000000000      
+TRAIN_TOKENS=100000000      
 
 
 confirm_unset() {
