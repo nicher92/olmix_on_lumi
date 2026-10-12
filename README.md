@@ -13,11 +13,15 @@ configs/<experiment>.yaml
   └─ generate_variants.py  ─>  data/runs/<run>/{config.yaml, variants.json, mixes/}
                                launch_all_swarms.sh
   └─ launch_all_swarms.sh  ─>  one training job per mixture
-  └─ convert_olmix_models_to_hf.sh
-  └─ eval_bpb.sh           ─>  BPB scores
-  └─ collect_bpb.py        ─>  ratios.csv + metrics.csv
-  └─ olmix fit             ─>  suggested mixture
+  └─ run_pipeline.sh <run> [<fit config>]      (once training has finished)
+       └─ convert_one.sh      one array task per variant  ─>  HF checkpoints
+       └─ schedule_evals.sh   runs eval_bpb.sh            ─>  BPB scores
+       └─ collect_and_fit.sh  collect_bpb.py              ─>  ratios.csv + metrics.csv
+                              olmix fit (if a fit config) ─>  suggested mixture
 ```
+
+So a swarm is three commands: generate, launch, and `run_pipeline.sh` after the
+training array is done.
 
 ## Before you start
 
@@ -141,42 +145,65 @@ Submits one array task per mixture. Each task reads
 `/flash/project_465002530/users/$USER/ablation_output/<variant>/`.
 
 Model size, token budget and optimizer settings are in `scripts/train-0.05B.sh`.
-Lower `TRAIN_TOKENS` for a quick pipeline test; note the final checkpoint's
-iteration number changes with it.
+Lower `TRAIN_TOKENS` for a quick pipeline test, and set it back to `3000000000`
+before a real swarm (the skip-if-finished check expects `iter_0022889`, which is
+only right for 3B tokens). Raise `#SBATCH --time` with it: the 4 h default fits a
+pipeline test, not 3B tokens.
 
-## 4. Convert and evaluate
+## 4. Convert, evaluate and collect
+
+Once the training array has finished:
 
 ```bash
-./scripts/convert_olmix_models_to_hf.sh
+./scripts/run_pipeline.sh <run_prefix>                      # stops after collect
+./scripts/run_pipeline.sh <run_prefix> configs/<fit>.yaml   # also runs the fit
 ```
+
+Run it from the repository root. It submits the conversion array, and a small
+job that waits for it and then schedules the evals; that job in turn submits the
+collect (and fit) job, because each stage's job ID only exists once the stage
+before it has run. Follow along with `squeue -u $USER` and the files in `logs/`.
+
+- **Convert** (`scripts/pipeline/convert_one.sh`, small-g): reads the final
+  iteration from Megatron's `latest_checkpointed_iteration.txt`, so it works for
+  any `TRAIN_TOKENS`, and skips variants that are already converted.
+- **Evaluate** (`scripts/pipeline/schedule_evals.sh`): runs `eval_bpb.sh` on every
+  converted model of the run. `HF_HOME` must be set in `env.sh` (see `eval_bpb.sh`),
+  and the task groups come from `TASK_GROUPS`, default `bpb-core`; it is passed
+  through, so e.g. `TASK_GROUPS=bpb-core,bpb-generative ./scripts/run_pipeline.sh ...`.
+- **Collect** (`scripts/pipeline/collect_and_fit.sh`, small): writes
+  `data/runs/<run>/olmix_fit/ratios.csv` (mixture weights) and `metrics.csv`
+  (BPB scores, MMLU subjects averaged into `mmlu_stem_bpb`).
+
+Dependencies are `afterany`, so one variant failing to convert or evaluate does
+not stop the rest; `collect_bpb.py` reports only the variants it found. Check the
+eval logs for `failed evaluation(s)` before trusting a fit: an evaluation can
+fail without failing its job.
 
 BPB evaluation needs our fork of oellm-eval:
 
 ```bash
 uv tool install -p 3.12 --force git+https://github.com/nicher92/oellm-eval.git@bpb-metrics
-export HF_HOME=/scratch/project_465002530/cache/huggingface
-oellm-eval schedule --models "<path to model>" --task_groups "bpb-core"
 ```
 
-`./scripts/eval_bpb.sh <hf-dir> [...]` wraps that call: it checks each path holds
-a model before scheduling, and takes `TASK_GROUPS=bpb-all` to include MMLU STEM.
+### Running the stages by hand
 
-## 5. Collect results for the fit
+For a single model or a partial rerun, the stages can still be run separately:
 
 ```bash
-python scripts/collect_bpb.py \
+./scripts/eval_bpb.sh <hf-dir> [...]          # checks each path holds a model, then schedules
+$OLMIX_PYTHON scripts/collect_bpb.py \
     --results-dir <eval output>/<timestamp> \
     --variants-json data/runs/<run>/variants.json \
     --output-dir data/runs/<run>/olmix_fit
 ```
 
-Writes `ratios.csv` (mixture weights) and `metrics.csv` (BPB scores), which is
-what `olmix fit` consumes.
+## 5. Fit the regression
 
-## 6. Fit the regression
-
-The fit needs a config of its own. Copy `configs/fit_example.yaml` and set the
-two CSV paths, then paste in a priors block:
+The fit needs a config of its own. Pass it to `run_pipeline.sh` to fit straight
+after collecting, or run the fit by hand once `ratios.csv` and `metrics.csv`
+exist. Copy `configs/fit_test.yaml` and set the two CSV paths, then paste in a
+priors block:
 
 ```bash
 $OLMIX_PYTHON scripts/extract_priors.py configs/<experiment>.yaml
@@ -221,6 +248,9 @@ round, 64 for six).
 | `data/*_frozen.json`, `data/stage_1_optimal.json` | Frozen mixtures for reuse experiments |
 | `scripts/generate_variants.py` | Samples mixtures with olmix |
 | `scripts/train-0.05B.sh` | One training run; submitted as an array |
+| `scripts/run_pipeline.sh` | Everything after training: convert, evaluate, collect, fit |
+| `scripts/pipeline/*.sh` | The stages `run_pipeline.sh` submits |
+| `scripts/eval_bpb.sh` | Schedules BPB evals with oellm-eval |
 | `scripts/collect_bpb.py` | Eval results + variants → fit inputs |
 | `scripts/test_bpb_scoring.py`, `scripts/check_upstream_acc_sh` | Checks on the BPB implementation |
 
@@ -242,11 +272,10 @@ so the fit describes what was trained, but the exploration was not as intended.
 - Underscores under functions that are not used outside of the file
 - Split code into smaller, modular parts, ie translate code to what it does, shorten main functions
 - Add ruff linter and pre-commit hooks
-- Join all steps after creation of mixes into one slurm file to run huggingface model conversion, evaluation and regression mix (using slurm --dependency after ok) 
 - `configs/config.yaml` points at a project we no longer have access to
-- `iter_0022889` is hardcoded in `train-0.05B.sh` and `convert_olmix_models_to_hf.sh`;
-  it is only correct for `TRAIN_TOKENS=3000000000`. Derive it from `TRAIN_ITERS`,
-  or read `latest_checkpointed_iteration.txt` from the checkpoint directory
+- `iter_0022889` is still hardcoded in the skip check of `train-0.05B.sh` and in
+  the older `convert_olmix_models_to_hf.sh`; only right for `TRAIN_TOKENS=3000000000`.
+  `convert_one.sh` already reads `latest_checkpointed_iteration.txt`; do the same there
 - `eval_bpb.sh` and `generate_mixes.sh` do not yet source `env.sh`
 - `extract_priors.py` drops datasets whose `.bin` files are missing, with only a warning
 - `make_ratios.py` duplicates what `collect_bpb.py` already does
