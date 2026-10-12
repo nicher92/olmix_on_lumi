@@ -1,0 +1,27 @@
+settings:
+  max_tokens: 100000000
+  repetition_factor: 5.0
+  seed: 42
+
+swarm:
+  minimum_source_weight: 0.0001
+  minimum_topic_weight: 0.0001
+  source_temperature: 1.0
+  topic_temperature: 1.0
+  min_source_strength: 1
+  max_source_strength: 20
+  min_topic_strength: 1
+  max_topic_strength: 20
+  enable_bound: true
+  manual_prior: null
+  manual_topic_prior: null
+  nonzero_weight: null
+  existing_mix_file: null
+
+datasets:
+  swallow_math:
+    paths:
+      - /scratch/project_465002530/training/collection/flag/swallow-math-2.0/megatron-lm/shard_0000_text_document
+  finemath:
+    paths:
+      - /scratch/project_465002530/training/collection/flag/finemath-0.0.0/megatron-lm/finemath-3plus/shard_0000_text_document

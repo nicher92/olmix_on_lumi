@@ -73,6 +73,64 @@ def parse_yaml(datasets_config):
     return leaf_tokens, sources, prefix_map
 
 
+# --- add to scripts/generate_variants.py ------------------------------------
+
+def write_fit_config(leaf_tokens, run_prefix, run_dir):
+    """Write a fit config for this swarm, with the priors already filled in.
+
+    relative_sizes is the prior the swarm sampled from, and token_counts is what
+    olmix uses as the tokens available per source when constraints are enabled.
+    Both come from leaf_tokens, so the fit cannot disagree with the sampler about
+    how big a dataset is.
+
+    Everything below `priors` is an experiment choice, so it is written as a
+    starting point for you to edit.
+    """
+    total = sum(leaf_tokens.values())
+    config = {
+        "swarm": {
+            "ratios": f"{run_dir}/olmix_fit/ratios.csv",
+            "metrics": f"{run_dir}/olmix_fit/metrics.csv",
+        },
+        "priors": {
+            "relative_sizes": {k: float(v / total) for k, v in leaf_tokens.items()},
+            "token_counts": {k: int(v) for k, v in leaf_tokens.items()},
+        },
+        "regression": {
+            "type": "log_linear",
+            "seed": 0,
+            "n_test": 0,
+            "train_split": 1.0,
+            # needs an eval config describing task families; off unless you have one
+            "aggregate_task_families": False,
+        },
+        "proposer": {
+            "type": "exact",
+            "temperature": None,
+            "kl_reg": 0.1,
+            "fit_only": False,
+            "make_worst_mix": False,
+        },
+        "constraints": {
+            # turn on for a mixture you intend to train, and set target_tokens to
+            # the size of the real run, not the proxy's
+            "enabled": False,
+            "target_tokens": None,
+            "repetition_factor": 5.0,
+        },
+        "filtering": {"drop_metrics": [], "obj_weights": {}},
+    }
+
+    path = f"{run_dir}/fit.yaml"
+    with open(path, "w") as f:
+        f.write(f"# Fit config for {run_prefix}, written by generate_variants.py.\n")
+        f.write("# Priors are filled in; edit regression/proposer/constraints for\n")
+        f.write("# your experiment. The CSV paths are written by collect_bpb.py.\n")
+        yaml.dump(config, f, default_flow_style=False, sort_keys=False)
+    print(f"Wrote {path}")
+    return path
+
+
 def olmix_leaf_order(sources):
     """Leaf order olmix works in: sources sorted by name, quality sorted within each.
     generate_weights_dirichlet returns weights in this order (see its docstring)."""
@@ -238,6 +296,9 @@ if __name__ == "__main__":
 
     lumi_variants = write_mixes_to_json(unpacked_mixtures, out_domains, run_prefix, run_dir)
     launcher_script = make_megatron_text_files_and_bash_script(lumi_variants, prefix_map, run_prefix, run_dir)
+    tokens_for_fit = {leaf_to_domain.get(k, k): v for k, v in target_leaf_tokens.items()}
+    write_fit_config(tokens_for_fit, run_prefix, run_dir)
+    
 
     print(f"✅ Generated {NUM_VARIANTS} Megatron mix files in the mixes/ directory.")
     print(f"✅ Generated {launcher_script}. Run it with: ./{launcher_script}")
